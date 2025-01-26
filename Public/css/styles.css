@@ -1,0 +1,206 @@
+body {
+    font-family: 'Anton SC', sans-serif;
+    background-color: #211818;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.left-container, .right-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.image-container img {
+    width: 640px;
+    height: 563px;
+    object-fit: contain;
+    margin: auto;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 508px;
+    height: 490px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 508px;
+    height: 532px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container h2, .register-container h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.login-container input[type="text"],
+.login-container input[type="password"],
+.register-container input[type="text"],
+.register-container input[type="password"] {
+    width: 468px;
+    height: 55px;
+    background-color: #D9D9D9;
+    border-radius: 20px;
+    padding: 0 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    font-size: 18px;
+}
+
+.login-container button, .register-container button {
+    width: 292px;
+    height: 63px;
+    background-color: #056911;
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 30px;
+    text-transform: lowercase;
+    margin-top: 20px;
+    font-family: 'Anton SC', sans-serif;
+}
+
+.login-container button:hover, .register-container button:hover {
+    background-color: #045a0e;
+}
+
+.login-container a, .register-container a {
+    color: #000;
+    text-decoration: none;
+    display: block;
+    margin-top: 10px;
+}
+
+#forgot-password-link {
+    font-size: 20px;
+    text-transform: lowercase;
+}
+
+#no-account-link, #login-link {
+    font-size: 22px;
+    text-transform: lowercase;
+}
+
+.login-container a:hover, .register-container a:hover {
+    text-decoration: underline;
+    color: #211818; /* Change text color to background color on hover */
+}
+
+.login-container label, .register-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 30px;
+    color: #000;
+    text-align: center;
+    font-family: 'Anton SC', sans-serif;
+}
+.password_image {
+    position: relative;
+}
+
+#eye, #confirm-eye {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+@media (max-width: 1100px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .left-container, .right-container {
+        width: 100%;
+    }
+    
+    .right-container {
+        flex:0;
+    }
+    .left-container {
+        height: 200px;
+        flex: 0 0 200px;
+    }
+
+    .image-container img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 580px) {
+    .login-container, .register-container {
+        width: 450px;
+        height: auto;
+    }
+
+    .login-container form, .register-container form{
+        width: 100%;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"],
+    .register-container input[type="text"],
+    .register-container input[type="password"] {
+        width: 91%;
+        height: 45px;
+        font-size: 15px;
+    }
+
+    .login-container button, .register-container button {
+        width: 200px;
+        height: 50px;
+        font-size: 24px;
+    }
+
+    .login-container label, .register-container label {
+        font-size: 24px;
+    }
+
+    #forgot-password-link,
+    #no-account-link,
+    #login-link {
+        font-size: 18px;
+    }
+
+    #eye, #confirm-eye {
+        right: 20px;
+    }
+}
