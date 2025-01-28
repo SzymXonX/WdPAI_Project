@@ -2,7 +2,6 @@
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    // Jeśli użytkownik nie jest zalogowany, przekieruj go na stronę logowania
     $url = "http://$_SERVER[HTTP_HOST]/login";
     header("Location: $url");
     exit;
@@ -40,7 +39,6 @@ if (!isset($_SESSION['user_id'])) {
         </div>
     </nav>
 
-    <!-- Menu boczne -->
     <div class="sidebar-menu" id="sidebar-menu">
         <ul>
             <li><a href="main">strona główna</a></li>

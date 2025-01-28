@@ -7,6 +7,5 @@ CREATE TABLE users (
     last_name VARCHAR(255)
 );
 
--- Insert sample data into the 'users' table
 INSERT INTO users (email, password, first_name, last_name) VALUES
 ('koczurszymon@gmail.com', '1234', 'Szymon', 'Koczur');

@@ -57,7 +57,6 @@ body {
     align-items: center;
 }
 
-/* Kontener formularza */
 .container {
     background-color: white;
     padding: 30px;
@@ -68,7 +67,6 @@ body {
     color: black;
 }
 
-/* Grupowanie pola i etykiety */
 .input-group {
     display: flex;
     align-items: center;
@@ -78,14 +76,12 @@ body {
     position: relative;
 }
 
-/* Stylizacja etykiet */
 label {
     text-align: right;
     width: 30%;
     margin-right: 30px;
 }
 
-/* Stylizacja pól formularza */
 input {
     width: 440px;
     height: 50px;
@@ -97,7 +93,6 @@ input {
 	padding-left:10px;
 }
 
-/* Stylizacja ikon oka */
 .input-group img {
     position: absolute;
     right: 15px;
@@ -106,7 +101,6 @@ input {
     height: 36px;
 }
 
-/* Sekcja przycisków */
 .buttons {
     display: flex;
     flex-direction: column;
@@ -114,7 +108,6 @@ input {
     margin-top: 20px;
 }
 
-/* Stylizacja przycisków */
 .btn {
     padding: 5px 50px;
     border: none;
@@ -126,30 +119,23 @@ input {
 	font-family: 'Anton SC', sans-serif;
 }
 
-/* Przycisk zmiany danych */
 .btn-save {
     background-color: #056911;
     color: white;
 }
 
-/* Przycisk wylogowania */
 .btn-logout {
     background-color: #C50303;
     color: white;
 }
 
 
-
-
-
-
 .menu-icon {
-    display: none; /* Domyślnie ukrywamy ikonę */
+    display: none;
     cursor: pointer;
     z-index: 100;
 }
 
-/* Ukryj standardowe menu i pokaż ikonę hamburgera przy szerokości < 1450px */
 @media (max-width: 1450px) {
     .nav-links {
         display: none;
@@ -159,11 +145,10 @@ input {
     }
 }
 
-/* Stylizacja menu bocznego */
 .sidebar-menu {
     position: fixed;
     top: 0;
-    right: -300px; /* Domyślnie poza ekranem */
+    right: -300px;
     width: 250px;
     height: 100%;
     background-color: #211818;
@@ -173,12 +158,10 @@ input {
     z-index: 99;
 }
 
-/* Aktywne menu (otwarte) */
 .sidebar-menu.active {
     right: 0;
 }
 
-/* Lista menu */
 .sidebar-menu ul {
     list-style: none;
     padding: 0;
@@ -196,7 +179,7 @@ input {
     font-size: 22px;
     display: block;
     padding: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Płynna animacja */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-menu ul li a.active {
@@ -207,4 +190,63 @@ input {
 .sidebar-menu ul li a:hover {
     text-decoration: underline;
     color: #909090;
+}
+
+
+@media (max-width: 720px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .input-group label {
+        width: 100%;
+        text-align: left;
+        margin-bottom: 5px;
+		font-size: 20px;
+    }
+
+    .input-group input {
+        width: 100%;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .input-group img {
+        right: 5px;
+		width: 28px;
+		height: 24px;
+		top: 60%;
+    }
+
+    .buttons .btn {
+		padding: 5px 50px;
+        font-size: 20px;
+    }
+
+    .logo img {
+        height: 60px;
+    }
+
+    .logo span {
+        font-size: 30px;
+    }
+
+    .menu-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .sidebar-menu {
+        width: 200px;
+    }
+
+    .sidebar-menu ul li a {
+        font-size: 18px;
+    }
 }

@@ -63,12 +63,11 @@ body{
 
 
 .menu-icon {
-    display: none; /* Domyślnie ukrywamy ikonę */
+    display: none;
     cursor: pointer;
     z-index: 100;
 }
 
-/* Ukryj standardowe menu i pokaż ikonę hamburgera przy szerokości < 1450px */
 @media (max-width: 1450px) {
     .nav-links {
         display: none;
@@ -78,11 +77,10 @@ body{
     }
 }
 
-/* Stylizacja menu bocznego */
 .sidebar-menu {
     position: fixed;
     top: 0;
-    right: -300px; /* Domyślnie poza ekranem */
+    right: -300px;
     width: 250px;
     height: 100%;
     background-color: #211818;
@@ -92,12 +90,10 @@ body{
     z-index: 99;
 }
 
-/* Aktywne menu (otwarte) */
 .sidebar-menu.active {
     right: 0;
 }
 
-/* Lista menu */
 .sidebar-menu ul {
     list-style: none;
     padding: 0;
@@ -115,7 +111,7 @@ body{
     font-size: 22px;
     display: block;
     padding: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease; /* Płynna animacja */
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar-menu ul li a:hover {
@@ -123,8 +119,31 @@ body{
     color: #909090;
 }
 
-/* Ustawienia aktywnego linku (ustawienia) */
 .sidebar-menu ul li a.active {
     text-decoration: underline;
     color: #909090;
+}
+
+
+@media (max-width: 720px) {
+    .logo img {
+        height: 60px;
+    }
+
+    .logo span {
+        font-size: 30px;
+    }
+
+    .menu-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .sidebar-menu {
+        width: 200px;
+    }
+
+    .sidebar-menu ul li a {
+        font-size: 18px;
+    }
 }

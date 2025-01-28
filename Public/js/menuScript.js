@@ -1,6 +1,4 @@
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const menuToggle = document.getElementById("menu-toggle");
     const sidebarMenu = document.getElementById("sidebar-menu");
@@ -17,10 +15,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const passwordInput = document.getElementById('password');
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
-                eyeIcon.src = 'Public/images/open_eye_password.png'; // Change to open eye icon
+                eyeIcon.src = 'Public/images/open_eye_password.png';
             } else {
                 passwordInput.type = 'password';
-                eyeIcon.src = 'Public/images/closed_eye_password.png'; // Change to closed eye icon
+                eyeIcon.src = 'Public/images/closed_eye_password.png';
             }
         });
     }
@@ -31,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function () {
             const confirmPasswordInput = document.getElementById('confirm-password');
             if (confirmPasswordInput.type === 'password') {
                 confirmPasswordInput.type = 'text';
-                confirmEyeIcon.src = 'Public/images/open_eye_password.png'; // Change to open eye icon
+                confirmEyeIcon.src = 'Public/images/open_eye_password.png';
             } else {
                 confirmPasswordInput.type = 'password';
-                confirmEyeIcon.src = 'Public/images/closed_eye_password.png'; // Change to closed eye icon
+                confirmEyeIcon.src = 'Public/images/closed_eye_password.png';
             }
         });
     }
