@@ -32,17 +32,17 @@
                     <input id="last_name" type="text" name="last_name" required>
 
                     <label for="email">e-mail</label>
-                    <input id="email" type="text" name="email" required>
+                    <input id="email" type="text" name="email" autocomplete="new-email" required>
                     
                     <label for="password">hasło</label>
                     <div class="password_image">
-                        <input id="password" type="password" name="password" required>
+                        <input id="password" type="password" name="password" autocomplete="new-password" required>
                         <img src="Public/Images/closed_eye_password.png" alt="eye" id="eye">
                     </div>
 
                     <label for="confirm-password">potwierdź hasło</label>
                     <div class="password_image">
-                        <input id="confirm_password" type="password" name="confirm_password" required>
+                        <input id="confirm-password" type="password" name="confirm-password" autocomplete="new-password" required>
                         <img src="Public/Images/closed_eye_password.png" alt="eye" id="confirm-eye">
                     </div>
 

@@ -49,18 +49,82 @@ body{
 	font-size: 40px;
 }
 
-.nav-links a:hover{
+.nav-links a:hover, .nav-links a.active {
     text-decoration: underline;
-	color: #909090;
-}
-
-.nav-links a.active{
-	text-decoration: underline;
-	color: #909090;
+    color: #909090;
 }
 
 .content{
 	padding: 20px;
 	height: 100%;
 	background-color: #202020;
+}
+
+
+
+.menu-icon {
+    display: none; /* Domyślnie ukrywamy ikonę */
+    cursor: pointer;
+    z-index: 100;
+}
+
+/* Ukryj standardowe menu i pokaż ikonę hamburgera przy szerokości < 1450px */
+@media (max-width: 1450px) {
+    .nav-links {
+        display: none;
+    }
+    .menu-icon {
+        display: block;
+    }
+}
+
+/* Stylizacja menu bocznego */
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Domyślnie poza ekranem */
+    width: 250px;
+    height: 100%;
+    background-color: #211818;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 99;
+}
+
+/* Aktywne menu (otwarte) */
+.sidebar-menu.active {
+    right: 0;
+}
+
+/* Lista menu */
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar-menu ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 22px;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Płynna animacja */
+}
+
+.sidebar-menu ul li a:hover {
+    text-decoration: underline;
+    color: #909090;
+}
+
+/* Ustawienia aktywnego linku (ustawienia) */
+.sidebar-menu ul li a.active {
+    text-decoration: underline;
+    color: #909090;
 }

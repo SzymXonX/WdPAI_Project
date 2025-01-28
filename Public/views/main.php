@@ -22,21 +22,38 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="icon" href="Public/Images/logo_bez_tla.png" type="image/png">
 </head>
 <body>
-    <nav class="navbar">
+<nav class="navbar">
         <div class="logo">
             <img src="Public/Images/logo_bez_tla.png" alt="SaveSpace Logo">
             <span>SaveSpace</span>
         </div>
         <ul class="nav-links">
+            <li><a href="main">strona główna</a></li>
+            <li><a href="#">wydatki</a></li>
+            <li><a href="#">przychody</a></li>
+            <li><a href="#">kategorie</a></li>
+            <li><a href="settings" class="active">ustawienia</a></li>
+        </ul>
+        <div class="menu-icon" id="menu-toggle">
+            <svg width="40" height="35" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.78125 3.51562H21.0938C21.5252 3.51562 21.875 3.16587 21.875 2.73438V0.78125C21.875 0.349756 21.5252 0 21.0938 0H0.78125C0.349756 0 0 0.349756 0 0.78125V2.73438C0 3.16587 0.349756 3.51562 0.78125 3.51562ZM0.78125 11.3281H21.0938C21.5252 11.3281 21.875 10.9784 21.875 10.5469V8.59375C21.875 8.16226 21.5252 7.8125 21.0938 7.8125H0.78125C0.349756 7.8125 0 8.16226 0 8.59375V10.5469C0 10.9784 0.349756 11.3281 0.78125 11.3281ZM0.78125 19.1406H21.0938C21.5252 19.1406 21.875 18.7909 21.875 18.3594V16.4062C21.875 15.9748 21.5252 15.625 21.0938 15.625H0.78125C0.349756 15.625 0 15.9748 0 16.4062V18.3594C0 18.7909 0.349756 19.1406 0.78125 19.1406Z" fill="black"/>
+            </svg>
+        </div>
+    </nav>
+
+    <!-- Menu boczne -->
+    <div class="sidebar-menu" id="sidebar-menu">
+        <ul>
             <li><a href="main" class="active">strona główna</a></li>
             <li><a href="#">wydatki</a></li>
             <li><a href="#">przychody</a></li>
             <li><a href="#">kategorie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
-    </nav>
+    </div>
     <main class="content">
         
     </main>
+    <script src="Public/js/menuScript.js"></script>
 </body>
 </html>
