@@ -17,14 +17,16 @@
         </div>
         <div class="right-container">
             <div class="login-container">
-                <form>
+                <form action="/login-user" method="POST">
                     <label for="email">e-mail</label>
-                    <input id="email" type="text" required>
+                    <input id="email" type="text" name="email" required>
+
                     <label for="password">hasło</label>
                     <div class="password_image">
-                        <input id="password" type="password" required>
+                        <input id="password" type="password" name="password" required>
                         <img src="Public/Images/closed_eye_password.png" alt="eye" id="eye">
                     </div>
+
                     <a id="forgot-password-link" href="#">zapomniałeś hasła?</a>
                     <button id="login-button" type="submit">zaloguj</button>
                 </form>

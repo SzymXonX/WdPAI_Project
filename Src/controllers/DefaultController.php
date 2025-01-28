@@ -11,8 +11,12 @@ class DefaultController extends AppController {
     
     public function register()
     {
-        // wyświetlamy widok "register" (czyli plik public/views/register.php)
         $this->render('register');
+    }
+
+    public function main()
+    {
+        $this->render('main');
     }
 
 }

@@ -17,22 +17,25 @@
         </div>
         <div class="right-container">
             <div class="register-container">
-                <form>
+                <form action="/register-user" method="POST">
                     <label for="email">e-mail</label>
-                    <input id="email" type="text" required>
+                    <input id="email" type="text" name="email" required>
+                    
                     <label for="password">hasło</label>
                     <div class="password_image">
-                        <input id="password" type="password" required>
+                        <input id="password" type="password" name="password" required>
                         <img src="Public/Images/closed_eye_password.png" alt="eye" id="eye">
                     </div>
+
                     <label for="confirm-password">potwierdź hasło</label>
                     <div class="password_image">
                         <input id="confirm-password" type="password" required>
                         <img src="Public/Images/closed_eye_password.png" alt="eye" id="confirm-eye">
                     </div>
+
                     <button id="register-button" type="submit">zarejestruj</button>
                 </form>
-                <a id="login-link" href="index">masz już konto?</a>
+<a id="login-link" href="index">masz już konto?</a>
             </div>
         </div>
     </div>
