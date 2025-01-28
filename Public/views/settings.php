@@ -18,7 +18,7 @@ if (!isset($_SESSION['user_id'])) {
     <title>SaveSpace</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Public/css/mainStyles.css">
+    <link rel="stylesheet" href="Public/css/settingsStyles.css">
     <link rel="icon" href="Public/Images/logo_bez_tla.png" type="image/png">
 </head>
 <body>
@@ -28,11 +28,11 @@ if (!isset($_SESSION['user_id'])) {
             <span>SaveSpace</span>
         </div>
         <ul class="nav-links">
-            <li><a href="main" class="active">strona główna</a></li>
+            <li><a href="main">strona główna</a></li>
             <li><a href="#">wydatki</a></li>
             <li><a href="#">przychody</a></li>
             <li><a href="#">kategorie</a></li>
-            <li><a href="settings">ustawienia</a></li>
+            <li><a href="settings" class="active">ustawienia</a></li>
         </ul>
     </nav>
     <main class="content">
