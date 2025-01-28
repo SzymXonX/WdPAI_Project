@@ -17,7 +17,16 @@
         </div>
         <div class="right-container">
             <div class="login-container">
-                <form action="/login-user" method="POST">
+                <form class="login" action="/login_user" method="POST">
+                    <div class="messages">
+                        <?php
+                            if(isset($messages)){
+                                foreach($messages as $message){
+                                    echo $message;
+                                }
+                            }
+                        ?>
+                    </div>
                     <label for="email">e-mail</label>
                     <input id="email" type="text" name="email" required>
 

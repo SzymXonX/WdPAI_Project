@@ -24,7 +24,7 @@
         </ul>
     </nav>
     <main class="content">
-
+        
     </main>
 </body>
 </html>

@@ -35,7 +35,7 @@
 
                     <button id="register-button" type="submit">zarejestruj</button>
                 </form>
-<a id="login-link" href="index">masz już konto?</a>
+                <a id="login-link" href="login">masz już konto?</a>
             </div>
         </div>
     </div>

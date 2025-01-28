@@ -4,9 +4,9 @@ require_once 'AppController.php';
 
 class DefaultController extends AppController {
 
-    public function index()
+    public function login()
     {
-        $this->render('index');
+        $this->render('login');
     }
     
     public function register()
