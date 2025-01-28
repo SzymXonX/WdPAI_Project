@@ -1,7 +1,9 @@
 <?php
 
+ob_start();
+
 require_once 'AppController.php';
-require_once __DIR__ .'/../models/User.php';
+require_once __DIR__ . '/../models/User.php';
 require_once 'Database.php';
 
 class SecurityController extends AppController {
@@ -43,13 +45,19 @@ class SecurityController extends AppController {
                 $userData['last_name']
             );
 
-            session_start();
+            if (session_status() === PHP_SESSION_NONE) {
+                session_start();
+            }
+
             $_SESSION['user_id'] = $user->getId();
             $_SESSION['user_email'] = $user->getEmail();
             $_SESSION['user_name'] = $user->getFirstName() . ' ' . $user->getLastName();
 
+            ob_end_clean();
+
             $url = "http://$_SERVER[HTTP_HOST]";
             header("Location: {$url}/main");
+            exit();
 
         } catch (PDOException $e) {
             return $this->render('login', ['messages' => ['Database error: ' . $e->getMessage()]]);
@@ -68,7 +76,7 @@ class SecurityController extends AppController {
 
         $email = $_POST['email'];
         $password = $_POST['password'];
-        $confirmPassword = $_POST['confirm_password'];
+        $confirmPassword = $_POST['confirm-password'];
         $firstName = $_POST['first_name'];
         $lastName = $_POST['last_name'];
 

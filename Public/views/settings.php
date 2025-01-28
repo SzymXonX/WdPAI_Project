@@ -53,14 +53,15 @@ if (!isset($_SESSION['user_id'])) {
 
     <main class="content">
         <div class="container">
-            <form action="/change_data" method="POST">
-                <?php
-                    if(isset($messages)){
-                        foreach($messages as $message){
-                            echo $message;
-                        }
-                    }
-                ?>
+            <form action="/changeData" method="POST">
+                <?php if (isset($messages) && is_array($messages)): ?>
+                    <?php foreach ($messages as $message): ?>
+                        <p style="color: <?= (stripos($message, 'błąd') !== false || stripos($message, 'error') !== false) ? 'red' : 'green'; ?>;">
+                            <?= htmlspecialchars($message); ?>
+                        </p>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
                 <div class="input-group">
                     <label for="first_name">imię</label>
                     <input type="text" id="first_name" name="first_name" value="<?= htmlspecialchars($user['first_name'] ?? ''); ?>" required>
@@ -75,12 +76,12 @@ if (!isset($_SESSION['user_id'])) {
                 </div>
                 <div class="input-group">
                     <label for="password">nowe hasło</label>
-                    <input id="password" type="password" name="password" autocomplete="new-password" required>
+                    <input id="password" type="password" name="password" autocomplete="new-password">
                     <img src="Public/Images/closed_eye_password.png" alt="eye" id="eye">
                 </div>
                 <div class="input-group">
                     <label for="confirm-password">powtórz hasło</label>
-                    <input id="confirm-password" type="password" name="confirm-password" autocomplete="new-password" required>
+                    <input id="confirm-password" type="password" name="confirm-password" autocomplete="new-password">
                     <img src="Public/Images/closed_eye_password.png" alt="eye" id="confirm-eye">
                 </div>
                 <div class="buttons">
