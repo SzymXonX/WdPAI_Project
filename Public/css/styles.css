@@ -55,7 +55,7 @@ body {
     border-radius: 50px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 508px;
-    height: 532px;
+    height: auto;
     text-align: center;
     display: flex;
     flex-direction: column;

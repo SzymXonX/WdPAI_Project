@@ -11,6 +11,7 @@ services:
       - .:/app/
     links:
       - php
+      - postgres
 
   php:
     build:
@@ -21,17 +22,24 @@ services:
 
   postgres:
     image: postgres:latest
-    container_name: postgres_db
     restart: always
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-      POSTGRES_DB: wdpaiproject
-    ports:
-      - "5432:5432"
+      POSTGRES_DB: savespace
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+        - ./Docker/postgres/:/docker-entrypoint-initdb.d/
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "5050:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "support@savespace.com"
+      PGADMIN_DEFAULT_PASSWORD: "password"
+    depends_on:
+      - postgres
 
 volumes:
-  postgres_data:
-    driver: local
+  pg_data:

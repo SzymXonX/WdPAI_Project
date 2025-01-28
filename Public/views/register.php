@@ -17,7 +17,20 @@
         </div>
         <div class="right-container">
             <div class="register-container">
-                <form action="/register-user" method="POST">
+                <form action="/register_user" method="POST">
+                        <?php
+                            if(isset($messages)){
+                                foreach($messages as $message){
+                                    echo $message;
+                                }
+                            }
+                        ?>
+                    <label for="first_name">imię</label>
+                    <input id="first_name" type="text" name="first_name" required>
+
+                    <label for="last_name">nazwisko</label>
+                    <input id="last_name" type="text" name="last_name" required>
+
                     <label for="email">e-mail</label>
                     <input id="email" type="text" name="email" required>
                     
@@ -29,7 +42,7 @@
 
                     <label for="confirm-password">potwierdź hasło</label>
                     <div class="password_image">
-                        <input id="confirm-password" type="password" required>
+                        <input id="confirm_password" type="password" name="confirm_password" required>
                         <img src="Public/Images/closed_eye_password.png" alt="eye" id="confirm-eye">
                     </div>
 

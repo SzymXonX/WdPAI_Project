@@ -1,61 +1,37 @@
 <?php
 
 class User {
+    private $id;
     private $email;
     private $password;
-    private $name;
-    private $surname;
-    private $phone;
+    private $firstName;
+    private $lastName;
 
-    public function __construct(
-        string $email,
-        string $password,
-        string $name,
-        string $surname
-    ) {
+    public function __construct($id, $email, $password, $firstName, $lastName) {
+        $this->id = $id;
         $this->email = $email;
         $this->password = $password;
-        $this->name = $name;
-        $this->surname = $surname;
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
     }
 
-    public function getEmail(): string 
-    {
+    public function getId() {
+        return $this->id;
+    }
+
+    public function getEmail() {
         return $this->email;
     }
 
-    public function getPassword()
-    {
+    public function getPassword() {
         return $this->password;
     }
 
-    public function getName(): string
-    {
-        return $this->name;
+    public function getFirstName() {
+        return $this->firstName;
     }
 
-    public function setName(string $name): void
-    {
-        $this->name = $name;
-    }
-
-    public function getSurname(): string
-    {
-        return $this->surname;
-    }
-
-    public function setSurname(string $surname): void
-    {
-        $this->surname = $surname;
-    }
-
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    public function setPhone($phone): void
-    {
-        $this->phone = $phone;
+    public function getLastName() {
+        return $this->lastName;
     }
 }
