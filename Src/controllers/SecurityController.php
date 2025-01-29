@@ -126,7 +126,4 @@ class SecurityController extends AppController {
         header("Location: /login");
         exit;
     }
-    
-
-
 }

@@ -1,0 +1,149 @@
+body{
+	margin: 0;
+	font-family: 'Anton SC', sans-serif;
+	background-color: #202020;
+	color: #ffffff;
+}
+
+.navbar{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0 20px;
+    height: 96px;
+    left: 0px;
+    top: 0px;
+    background: #211818;
+}
+
+.logo{
+	display: flex;
+	align-items: center;
+}
+
+.logo span{
+	font-size: 60px;
+	font-family: 'Jua', sans-serif;
+}
+
+.logo img{
+	height: 100px;
+	margin-right: 10px;
+}
+
+.nav-links{
+	list-style: none;
+	display: flex;
+	gap: 20px;
+	margin: 0;
+	padding: 0;
+}
+
+.nav-links li{
+	display: inline;
+}
+
+.nav-links a{
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 40px;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    text-decoration: underline;
+    color: #909090;
+}
+
+.content{
+	padding: 20px;
+	height: 100%;
+	background-color: #202020;
+}
+
+
+
+.menu-icon {
+    display: none;
+    cursor: pointer;
+    z-index: 100;
+}
+
+@media (max-width: 1450px) {
+    .nav-links {
+        display: none;
+    }
+    .menu-icon {
+        display: block;
+    }
+}
+
+.sidebar-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 250px;
+    height: 100%;
+    background-color: #211818;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+    transition: right 0.3s ease-in-out;
+    padding-top: 60px;
+    z-index: 99;
+}
+
+.sidebar-menu.active {
+    right: 0;
+}
+
+.sidebar-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar-menu ul li {
+    padding: 15px;
+    text-align: center;
+}
+
+.sidebar-menu ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 22px;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar-menu ul li a:hover {
+    text-decoration: underline;
+    color: #909090;
+}
+
+.sidebar-menu ul li a.active {
+    text-decoration: underline;
+    color: #909090;
+}
+
+
+@media (max-width: 720px) {
+    .logo img {
+        height: 60px;
+    }
+
+    .logo span {
+        font-size: 30px;
+    }
+
+    .menu-icon svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .sidebar-menu {
+        width: 200px;
+    }
+
+    .sidebar-menu ul li a {
+        font-size: 18px;
+    }
+}

@@ -26,10 +26,10 @@ if (!isset($_SESSION['user_id'])) {
             <span>SaveSpace</span>
         </div>
         <ul class="nav-links">
-            <li><a href="main" class="active">strona główna</a></li>
+            <li><a href="main">strona główna</a></li>
             <li><a href="#">wydatki</a></li>
             <li><a href="#">przychody</a></li>
-            <li><a href="categories">kategorie</a></li>
+            <li><a href="categories" class="active">kategorie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
         <div class="menu-icon" id="menu-toggle">
@@ -41,10 +41,10 @@ if (!isset($_SESSION['user_id'])) {
 
     <div class="sidebar-menu" id="sidebar-menu">
         <ul>
-            <li><a href="main" class="active">strona główna</a></li>
+            <li><a href="main">strona główna</a></li>
             <li><a href="#">wydatki</a></li>
             <li><a href="#">przychody</a></li>
-            <li><a href="categories">kategorie</a></li>
+            <li><a href="categories" class="active">kategorie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
     </div>

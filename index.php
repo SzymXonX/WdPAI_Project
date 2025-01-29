@@ -10,6 +10,7 @@ Router::get('login', 'DefaultController');
 Router::get('register', 'DefaultController');
 Router::get('main', 'MainController');
 Router::get('settings', 'SettingsController');
+Router::get('categories', 'CategoriesController');
 
 Router::post('login_user', 'SecurityController');
 Router::post('register_user', 'SecurityController');
