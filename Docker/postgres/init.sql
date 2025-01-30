@@ -1,3 +1,4 @@
+/* Tabela użytkowników */
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) NOT NULL UNIQUE,
@@ -7,11 +8,20 @@ CREATE TABLE users (
     last_name VARCHAR(255)
 );
 
+/* Tabela kategorii */
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL UNIQUE
 );
 
+
+CREATE TABLE income_categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
+);
+
+
+/* Tabela wydatków */
 CREATE TABLE expenses (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
@@ -23,31 +33,138 @@ CREATE TABLE expenses (
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
 
+/* Tabela przychodów */
 CREATE TABLE incomes (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     amount DECIMAL(10,2) NOT NULL,
-    source VARCHAR(255) NOT NULL,
+    category_id INT NOT NULL,
     description TEXT,
     date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES income_categories(id) ON DELETE CASCADE
+);
+
+/* Tabela sumaryczna wydatki przychody i budżet */
+CREATE TABLE summary (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    year INT NOT NULL,
+    month INT NOT NULL,
+    total_income DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    total_expense DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    budget DECIMAL(10,2) GENERATED ALWAYS AS (total_income - total_expense) STORED,
+    UNIQUE (user_id, year, month),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+/* Trigger UPDATE wydatków */
+CREATE OR REPLACE FUNCTION update_summary_expense()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO summary (user_id, year, month, total_expense)
+    VALUES (
+        NEW.user_id,
+        EXTRACT(YEAR FROM NEW.date),
+        EXTRACT(MONTH FROM NEW.date),
+        NEW.amount
+    )
+    ON CONFLICT (user_id, year, month) 
+    DO UPDATE SET 
+        total_expense = summary.total_expense + NEW.amount;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_expense_insert
+AFTER INSERT ON expenses
+FOR EACH ROW EXECUTE FUNCTION update_summary_expense();
+
+/* Trigger DELETE wydatków */
+CREATE OR REPLACE FUNCTION update_summary_expense_delete()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE summary
+    SET total_expense = total_expense - OLD.amount
+    WHERE user_id = OLD.user_id 
+    AND year = EXTRACT(YEAR FROM OLD.date) 
+    AND month = EXTRACT(MONTH FROM OLD.date);
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_expense_delete
+AFTER DELETE ON expenses
+FOR EACH ROW EXECUTE FUNCTION update_summary_expense_delete();
+
+/* Trigger UPDATE przychodów */
+CREATE OR REPLACE FUNCTION update_summary_income()
+RETURNS TRIGGER AS $$
+BEGIN
+    INSERT INTO summary (user_id, year, month, total_income)
+    VALUES (
+        NEW.user_id,
+        EXTRACT(YEAR FROM NEW.date),
+        EXTRACT(MONTH FROM NEW.date),
+        NEW.amount
+    )
+    ON CONFLICT (user_id, year, month) 
+    DO UPDATE SET 
+        total_income = summary.total_income + NEW.amount;
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+/* Trigger DELETE przychodów */
+CREATE TRIGGER after_income_insert
+AFTER INSERT ON incomes
+FOR EACH ROW EXECUTE FUNCTION update_summary_income();
+
+CREATE OR REPLACE FUNCTION update_summary_income_delete()
+RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE summary
+    SET total_income = total_income - OLD.amount
+    WHERE user_id = OLD.user_id 
+    AND year = EXTRACT(YEAR FROM OLD.date) 
+    AND month = EXTRACT(MONTH FROM OLD.date);
+
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER after_income_delete
+AFTER DELETE ON incomes
+FOR EACH ROW EXECUTE FUNCTION update_summary_income_delete();
+
+
+/* Wpisanie danych */
 INSERT INTO categories (name) VALUES
 ('Jedzenie'),
 ('Transport'),
 ('Zakupy'),
 ('Mieszkanie'),
 ('Zdrowie'),
-('Rozrywka');
+('Rozrywka'),
+('Inne');
+
+INSERT INTO income_categories (name) VALUES
+('Pensja'),
+('Premia'),
+('Inwestycje'),
+('Zwroty'),
+('Inne');
 
 INSERT INTO expenses (user_id, amount, category_id, description) VALUES
 (1, 50.00, 1, 'Obiad w restauracji'),
 (1, 80.00, 2, 'Bilet miesięczny Kraków'),
 (1, 200.00, 3, 'Spodnie w Reserved');
 
-INSERT INTO incomes (user_id, amount, source, description) VALUES
-(1, 3000.00, 'Pensja', 'Wynagrodzenie za pracę'),
-(1, 500.00, 'Dodatkowa praca', 'Pomalowanie sąsiadowi płotu'),
-(1, 200.00, 'Dodatkowa praca', 'Posprzątanie babci piwnicy');
+INSERT INTO incomes (user_id, amount, category_id , description) VALUES
+(1, 3000.00, 1, 'Wynagrodzenie za pracę'),
+(1, 500.00, 2, 'Premia za dobre wyniki w pracy'),
+(1, 200.00, 4, 'Zwrot za spodnie');
 
