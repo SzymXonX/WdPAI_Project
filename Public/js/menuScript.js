@@ -89,17 +89,51 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function fetchSummaryData() {
-        fetch(`/main?year=${currentYear}&month=${currentMonth}`)
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, "text/html");
+        fetch(`/main?year=${currentYear}&month=${currentMonth}`, {
+            headers: { "X-Requested-With": "XMLHttpRequest" }
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("summary-wydatki").value = data.summary.total_expense + ' zł';
+            document.getElementById("summary-przychody").value = data.summary.total_income + ' zł';
+            document.getElementById("summary-budzet").value = data.summary.budget + ' zł';
 
-                document.getElementById("summary-wydatki").value = doc.getElementById("summary-wydatki").value;
-                document.getElementById("summary-przychody").value = doc.getElementById("summary-przychody").value;
-                document.getElementById("summary-budzet").value = doc.getElementById("summary-budzet").value;
-            })
-            .catch(error => console.error("Błąd w pobieraniu danych:", error));
+            updateTransactionList("expenses-list", data.expenses, "expense");
+            updateTransactionList("incomes-list", data.incomes, "income");
+        })
+        .catch(error => console.error("Błąd w pobieraniu danych:", error));
+    }
+
+    function updateTransactionList(containerId, transactions, type) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = "";
+
+        if (transactions.length === 0) {
+            container.innerHTML = `<p class="no-transactions">Brak ${type === "expense" ? "wydatków" : "przychodów"} w tym miesiącu.</p>`;
+            return;
+        }
+
+        transactions.forEach(transaction => {
+            const transactionElement = document.createElement("div");
+            transactionElement.classList.add("transaction");
+            transactionElement.innerHTML = `
+                <span class="transaction-category">${transaction.category}</span>
+                <span class="transaction-amount ${type === "expense" ? "negative" : "positive"}">
+                    ${type === "expense" ? "-" : "+"}${transaction.amount} zł
+                </span>
+                <span class="transaction-date">${transaction.date}</span>
+                <div class="transaction-details">
+                    <p class="transaction-description">${transaction.description}</p>
+                    <button class="delete-button" onclick="deleteTransaction(event, ${transaction.id}, '${type}')">🗑 Usuń</button>
+                </div>
+            `;
+
+            transactionElement.addEventListener("click", function () {
+                this.querySelector(".transaction-details").classList.toggle("visible");
+            });
+
+            container.appendChild(transactionElement);
+        });
     }
 
     prevButton.addEventListener("click", function () {
@@ -124,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateDateDisplay();
 });
+
 
 // zmiana rozsuwanego menu kategorii zależnie od nacisniętego przycisku wyboru
 document.addEventListener("DOMContentLoaded", function () {
@@ -160,26 +195,30 @@ function toggleTransactionDetails(element) {
 
 
 function deleteTransaction(event, transactionId, type) {
-    event.stopPropagation(); // Nie rozwijaj opisu transakcji przy kliknięciu "Usuń"
+    event.stopPropagation();
 
-    const currentYear = document.getElementById("selected-year").value;
-    const currentMonth = document.getElementById("selected-month").value;
+
+    const currentYear = document.getElementById("current-date").dataset.year;
+    const currentMonth = document.getElementById("current-date").dataset.month;
 
     fetch('/deleteTransaction', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id: transactionId, type: type, year: currentYear, month: currentMonth })
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Błąd sieci: " + response.status);
+        }
+        return response.json();
+    })
     .then(data => {
         if (data.success) {
-            // Usuwamy transakcję z listy
             event.target.closest(".transaction").remove();
 
-            // Aktualizujemy budżet, przychody i wydatki
-            document.getElementById("summary-wydatki").value = data.newExpense;
-            document.getElementById("summary-przychody").value = data.newIncome;
-            document.getElementById("summary-budzet").value = data.newBudget;
+            document.getElementById("summary-wydatki").value = data.newExpense + " zł";
+            document.getElementById("summary-przychody").value = data.newIncome + " zł";
+            document.getElementById("summary-budzet").value = data.newBudget + " zł";
         } else {
             alert("Błąd: " + data.message);
         }
@@ -189,6 +228,9 @@ function deleteTransaction(event, transactionId, type) {
         alert("Wystąpił problem z połączeniem.");
     });
 }
+
+
+
 
 
 

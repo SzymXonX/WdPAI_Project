@@ -13,10 +13,21 @@ class MainController extends AppController {
         $selectedMonth = $_GET['month'] ?? date('m');
     
         $summaryData = $this->getSummaryData($user_id, $selectedYear, $selectedMonth);
-        $categories = $this->getCategories();
-        $incomeCategories = $this->getIncomeCategories();
+        $categories = $this->getCategories(); // Pobieramy kategorie wydatków
+        $incomeCategories = $this->getIncomeCategories(); // Pobieramy kategorie przychodów
         $expenses = $this->getUserExpenses($user_id, $selectedYear, $selectedMonth);
         $incomes = $this->getUserIncomes($user_id, $selectedYear, $selectedMonth);
+    
+        if ($_SERVER['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest') {
+            echo json_encode([
+                "summary" => $summaryData,
+                "expenses" => $expenses,
+                "incomes" => $incomes,
+                "categories" => $categories,
+                "incomeCategories" => $incomeCategories
+            ]);
+            exit();
+        }
     
         $this->render('main', [
             'summaryData' => $summaryData,
@@ -28,6 +39,8 @@ class MainController extends AppController {
             'selectedMonth' => $selectedMonth
         ]);
     }
+    
+    
     
     // Pobieranie danych sumarycznych
     private function getSummaryData($user_id, $year, $month) {
@@ -195,49 +208,61 @@ class MainController extends AppController {
     public function deleteTransaction() {
         $this->requireLogin();
     
-        $data = json_decode(file_get_contents("php://input"), true);
-        $transactionId = $data['id'] ?? null;
-        $type = $data['type'] ?? null;
+        header('Content-Type: application/json');
     
-        if (!$transactionId || !$type) {
-            echo json_encode(["success" => false, "message" => "Nieprawidłowe dane"]);
-            exit();
-        }
+        try {
+            $data = json_decode(file_get_contents("php://input"), true);
+            $transactionId = $data['id'] ?? null;
+            $type = $data['type'] ?? null;
+            $year = $data['year'] ?? date('Y');
+            $month = $data['month'] ?? date('m');
     
-        $database = new Database();
-        $db = $database->connect();
+            if (!$transactionId || !$type) {
+                echo json_encode(["success" => false, "message" => "Nieprawidłowe dane"]);
+                exit();
+            }
     
-        session_start();
-        $user_id = $_SESSION['user_id'];
+            $database = new Database();
+            $db = $database->connect();
     
-        if ($type === "expense") {
-            $query = "DELETE FROM expenses WHERE id = :id AND user_id = :user_id";
-        } else {
-            $query = "DELETE FROM incomes WHERE id = :id AND user_id = :user_id";
-        }
+            session_start();
+            $user_id = $_SESSION['user_id'];
     
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':id', $transactionId, PDO::PARAM_INT);
-        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
-        
-        if ($stmt->execute() && $stmt->rowCount() > 0) {
-            // Pobieramy nowe wartości po usunięciu
-            $selectedYear = $data['year'] ?? date('Y');
-            $selectedMonth = $data['month'] ?? date('m');
+            if ($type === "expense") {
+                $query = "DELETE FROM expenses WHERE id = :id AND user_id = :user_id";
+            } else {
+                $query = "DELETE FROM incomes WHERE id = :id AND user_id = :user_id";
+            }
     
-            $summaryData = $this->getSummaryData($user_id, $selectedYear, $selectedMonth);
+            $stmt = $db->prepare($query);
+            $stmt->bindParam(':id', $transactionId, PDO::PARAM_INT);
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
             
-            echo json_encode([
-                "success" => true,
-                "newBudget" => number_format($summaryData['budget'], 2, '.', ' ') . ' zł',
-                "newIncome" => number_format($summaryData['total_income'], 2, '.', ' ') . ' zł',
-                "newExpense" => number_format($summaryData['total_expense'], 2, '.', ' ') . ' zł'
-            ]);
-        } else {
-            echo json_encode(["success" => false, "message" => "Nie znaleziono transakcji"]);
+            if ($stmt->execute() && $stmt->rowCount() > 0) {
+                // Pobieramy nowe wartości dla aktualnego miesiąca
+                $summaryData = $this->getSummaryData($user_id, $year, $month);
+                $expenses = $this->getUserExpenses($user_id, $year, $month);
+                $incomes = $this->getUserIncomes($user_id, $year, $month);
+    
+                echo json_encode([
+                    "success" => true,
+                    "newBudget" => number_format($summaryData['budget'], 2, '.', ' '),
+                    "newIncome" => number_format($summaryData['total_income'], 2, '.', ' '),
+                    "newExpense" => number_format($summaryData['total_expense'], 2, '.', ' '),
+                    "expenses" => $expenses,
+                    "incomes" => $incomes
+                ]);
+            } else {
+                echo json_encode(["success" => false, "message" => "Nie znaleziono transakcji"]);
+            }
+        } catch (Exception $e) {
+            echo json_encode(["success" => false, "message" => "Błąd serwera: " . $e->getMessage()]);
         }
         exit();
     }
+    
+    
+    
     
     
     
