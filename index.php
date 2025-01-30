@@ -11,6 +11,7 @@ Router::get('register', 'DefaultController');
 Router::get('main', 'MainController');
 Router::get('settings', 'SettingsController');
 Router::get('categories', 'CategoriesController');
+Router::get('summary', 'SummaryController');
 
 Router::post('login_user', 'SecurityController');
 Router::post('register_user', 'SecurityController');
@@ -18,5 +19,8 @@ Router::post('logout', 'SecurityController');
 Router::post('changeData', 'SettingsController');
 Router::post('add', 'MainController');
 Router::post('deleteTransaction', 'MainController');
+Router::post('addCategory', 'CategoriesController');
+Router::post('deleteCategory', 'CategoriesController');
+
 
 Router::run($path);
