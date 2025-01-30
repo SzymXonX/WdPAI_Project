@@ -47,103 +47,404 @@ body{
 	text-decoration: none;
 	color: #ffffff;
 	font-size: 40px;
+	font-family: 'Anton SC', sans-serif;
 }
 
-.nav-links a:hover, .nav-links a.active {
-    text-decoration: underline;
-    color: #909090;
+.nav-links a:hover, .nav-links a.active{
+	text-decoration: underline;
+	color: #909090;
 }
 
 .content{
 	padding: 20px;
 	height: 100%;
 	background-color: #202020;
+	font-family: 'Anton SC', sans-serif;
+}
+
+.menu-icon{
+	display: none;
+	cursor: pointer;
+	z-index: 100;
+}
+
+@media (max-width: 1450px){
+	.nav-links{
+		display: none;
+	}
+	.menu-icon{
+		display: block;
+	}
+}
+
+.sidebar-menu{
+	position: fixed;
+	top: 0;
+	right: -300px;
+	width: 250px;
+	height: 100%;
+	background-color: #211818;
+	box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+	transition: right 0.3s ease-in-out;
+	padding-top: 60px;
+	z-index: 99;
+}
+
+.sidebar-menu.active{
+	right: 0;
+}
+
+.sidebar-menu ul{
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.sidebar-menu ul li{
+	padding: 15px;
+	text-align: center;
+}
+
+.sidebar-menu ul li a{
+	text-decoration: none;
+	color: #ffffff;
+	font-size: 22px;
+	display: block;
+	padding: 10px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	font-family: 'Anton SC', sans-serif;
+}
+
+.sidebar-menu ul li a:hover, .sidebar-menu ul li a.active{
+	text-decoration: underline;
+	color: #909090;
+}
+
+@media (max-width: 720px){
+	.logo img{
+		height: 60px;
+	}
+
+	.logo span{
+		font-size: 30px;
+	}
+
+	.menu-icon svg{
+		width: 30px;
+		height: 30px;
+	}
+
+	.sidebar-menu{
+		width: 200px;
+	}
+
+	.sidebar-menu ul li a{
+		font-size: 18px;
+	}
+}
+/*^^^^^ Menu ^^^^^*/
+
+/*vvvvv Dashboard vvvvv*/
+h2{
+    font-weight: normal;
+    font-family: 'Anton SC', sans-serif;
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+.dashboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: auto;
 }
 
 
-
-.menu-icon {
-    display: none;
-    cursor: pointer;
-    z-index: 100;
+.date-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: black;
 }
 
-@media (max-width: 1450px) {
-    .nav-links {
-        display: none;
-    }
-    .menu-icon {
-        display: block;
-    }
-}
-
-.sidebar-menu {
-    position: fixed;
-    top: 0;
-    right: -300px;
-    width: 250px;
-    height: 100%;
-    background-color: #211818;
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
-    transition: right 0.3s ease-in-out;
-    padding-top: 60px;
-    z-index: 99;
-}
-
-.sidebar-menu.active {
-    right: 0;
-}
-
-.sidebar-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.sidebar-menu ul li {
-    padding: 15px;
+#current-date {
+    width: 150px;
     text-align: center;
+    display: inline-block;
 }
 
-.sidebar-menu ul li a {
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 22px;
-    display: block;
+.arrow-button {
+    background: #909090;
+    border: none;
+    padding: 5px 10px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.arrow-button:hover {
+    background: #777777;
+}
+
+
+
+/* Wyświetlanie komunikatów na stronie */
+.error-messages,
+.success-messages {
+    background-color: #ffdddd;
+    color: #d8000c;
     padding: 10px;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
+    width: 50%;
+    margin: 10px auto;
+    border: 1px solid #d8000c;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar-menu ul li a:hover {
-    text-decoration: underline;
-    color: #909090;
+.success-messages {
+    background-color: #ddffdd;
+    color: #008000;
+    border: 1px solid #008000;
 }
 
-.sidebar-menu ul li a.active {
-    text-decoration: underline;
-    color: #909090;
+.error-messages p,
+.success-messages p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+/* -------------------------- */
+
+
+.summary-container, .form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 529px;
+    color: black;
+    font-family: 'Anton SC', sans-serif;
+}
+
+.summary-container{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center
+}
+
+.summary-item {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 5px 0;
+}
+
+.summary-label {
+    font-family: 'Anton SC', sans-serif;
+    color: black;
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+.summary-value {
+    background-color: #D9D9D9;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 25px;
+    padding: 5px;
+    text-align: center;
+    width: 289px;
+    height: 43px;
+    border-radius: 20px;
+    font-family: 'Anton SC', sans-serif;
+}
+
+#wydatki, #summary-wydatki{
+    color:#C50303;
+}
+#przychody, #summary-przychody{
+    color:#056911;
+}
+
+#budzet, #summary-budzet{
+	color:black;
+}
+
+.form-content{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto;
+}
+
+.form-header {
+    display: flex;
+    gap: 8px;
+	margin-right: 10px;
+}
+
+.transaction-type-btn {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    background-color: #909090;
+    color: white;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+	font-family: 'Anton SC', sans-serif;
+}
+
+.transaction-type-btn.active {
+    background-color: green;
+}
+
+.form-group{
+	display: flex;
+    align-items: center;
+	gap: 8px;
+}
+
+.form-group label{
+	font-size: 18px;
+	color: #333;
+    white-space: nowrap;
+}
+
+.form-group select,
+.form-group input{
+	padding: 12px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	background: #d9d9d9;
+}
+
+.form-group input, .form-group select{
+    width: 100%;
+}
+
+.add-button{
+	background: #056911;
+	color: white;
+	padding: 15px;
+	border: none;
+	border-radius: 8px;
+	font-size: 18px;
+	cursor: pointer;
+	transition: background 0.3s;
+    font-family: 'Anton SC', sans-serif;
+}
+
+.add-button:hover{
+	background: #03450c;
+}
+/* ^^^^ Górne kontenery na podsumowanie i dodawanie ^^^^ */
+
+
+
+/* vvvvv Dolne kontenery na wydatki i przychody vvvvv */
+.transactions-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.expenses-container, .incomes-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 529px;
+    color: black;
+    min-height: 300px;
+    font-family: 'Anton SC', sans-serif;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 10px;
+    font-family: 'Anton SC', sans-serif;
+}
+
+.transactions-list {
+    min-height: 200px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    background: #f9f9f9;
 }
 
 
-@media (max-width: 720px) {
-    .logo img {
-        height: 60px;
-    }
 
-    .logo span {
-        font-size: 30px;
-    }
 
-    .menu-icon svg {
-        width: 30px;
-        height: 30px;
-    }
 
-    .sidebar-menu {
-        width: 200px;
-    }
 
-    .sidebar-menu ul li a {
-        font-size: 18px;
-    }
+/* Responsywność */
+@media (max-width: 1200px){
+	.dashboard-container{
+		grid-template-columns: 1fr;
+	}
+	
+	.summary-container{
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+	
+	.summary-item{
+		flex: 1;
+		min-width: 250px;
+	}
+}
+
+@media (max-width: 600px){
+	.form-row{
+		flex-direction: column;
+		gap: 10px;
+	}
+
+	.summary-item{
+		flex-direction: column;
+	}
+
+	.summary-value{
+		width: 100%;
+	}
+
+	.form-group{
+		flex-direction: column;
+	}
+
+	.form-content{
+		gap: 5px;
+	}
+
+	.add-button{
+		padding: 10px;
+	}
 }
