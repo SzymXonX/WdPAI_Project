@@ -136,19 +136,51 @@ if (!isset($_SESSION['user_id'])) {
 
         <div class="transactions-container">
             <div class="expenses-container">
-                <h2 class="section-title">wydatki</h2>
+                <h2 class="section-title">Wydatki</h2>
                 <div class="transactions-list" id="expenses-list">
-                    <!-- wydatki -->
+                    <?php if (!empty($expenses)): ?>
+                        <?php foreach ($expenses as $expense): ?>
+                            <div class="transaction" onclick="toggleTransactionDetails(this)">
+                                <span class="transaction-category"><?= htmlspecialchars($expense['category']); ?></span>
+                                <span class="transaction-amount negative">-<?= number_format($expense['amount'], 2, '.', ' ') ?> zł</span>
+                                <span class="transaction-date"><?= date('d-m-Y', strtotime($expense['date'])); ?></span>
+
+                                <div class="transaction-details">
+                                    <p class="transaction-description"><?= htmlspecialchars($expense['description']); ?></p>
+                                    <button class="delete-button" onclick="deleteTransaction(event, <?= $expense['id']; ?>, 'expense')">🗑 Usuń</button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="no-transactions">Brak wydatków w tym miesiącu.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
             <div class="incomes-container">
-                <h2 class="section-title">przychody</h2>
+                <h2 class="section-title">Przychody</h2>
                 <div class="transactions-list" id="incomes-list">
-                    <!-- przychody -->
+                    <?php if (!empty($incomes)): ?>
+                        <?php foreach ($incomes as $income): ?>
+                            <div class="transaction" onclick="toggleTransactionDetails(this)">
+                                <span class="transaction-category"><?= htmlspecialchars($income['category']); ?></span>
+                                <span class="transaction-amount positive">+<?= number_format($income['amount'], 2, '.', ' ') ?> zł</span>
+                                <span class="transaction-date"><?= date('d-m-Y', strtotime($income['date'])); ?></span>
+
+                                <div class="transaction-details">
+                                    <p class="transaction-description"><?= htmlspecialchars($income['description']); ?></p>
+                                    <button class="delete-button" onclick="deleteTransaction(event, <?= $income['id']; ?>, 'income')">🗑 Usuń</button>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p class="no-transactions">Brak przychodów w tym miesiącu.</p>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
+
+
     </main>
 
     <script src="public/js/menuscript.js"></script>

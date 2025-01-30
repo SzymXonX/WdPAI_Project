@@ -2,7 +2,6 @@
 require_once 'AppController.php';
 require_once __DIR__ . '/../models/Category.php';
 
-
 class MainController extends AppController {
     public function main() {
         $this->requireLogin();
@@ -14,18 +13,21 @@ class MainController extends AppController {
         $selectedMonth = $_GET['month'] ?? date('m');
     
         $summaryData = $this->getSummaryData($user_id, $selectedYear, $selectedMonth);
-        $categories = $this->getCategories(); 
-        $incomeCategories = $this->getIncomeCategories(); 
+        $categories = $this->getCategories();
+        $incomeCategories = $this->getIncomeCategories();
+        $expenses = $this->getUserExpenses($user_id, $selectedYear, $selectedMonth);
+        $incomes = $this->getUserIncomes($user_id, $selectedYear, $selectedMonth);
     
         $this->render('main', [
             'summaryData' => $summaryData,
             'categories' => $categories,
             'incomeCategories' => $incomeCategories,
+            'expenses' => $expenses,
+            'incomes' => $incomes,
             'selectedYear' => $selectedYear,
             'selectedMonth' => $selectedMonth
         ]);
     }
-    
     
     // Pobieranie danych sumarycznych
     private function getSummaryData($user_id, $year, $month) {
@@ -46,7 +48,6 @@ class MainController extends AppController {
         return $summary ?: ['total_income' => 0.00, 'total_expense' => 0.00, 'budget' => 0.00];
     }
     
-
     // Pobieranie kategorii
     private function getCategories() {
         $this->requireLogin();
@@ -83,7 +84,6 @@ class MainController extends AppController {
         return $incomeCategories;
     }
     
-
     // Dodawanie wydatków i przychodów na stronie głównej
     public function add() {
         $this->requireLogin();
@@ -150,4 +150,97 @@ class MainController extends AppController {
         }
     }
     
+    private function getUserExpenses($user_id, $year, $month) {
+        $database = new Database();
+        $db = $database->connect();
+    
+        $query = "SELECT e.id, e.amount, c.name AS category, e.description, e.date
+                  FROM expenses e
+                  JOIN categories c ON e.category_id = c.id
+                  WHERE e.user_id = :user_id
+                  AND EXTRACT(YEAR FROM e.date) = :year
+                  AND EXTRACT(MONTH FROM e.date) = :month
+                  ORDER BY e.date DESC";
+    
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':year', $year, PDO::PARAM_INT);
+        $stmt->bindParam(':month', $month, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    private function getUserIncomes($user_id, $year, $month) {
+        $database = new Database();
+        $db = $database->connect();
+    
+        $query = "SELECT i.id, i.amount, ic.name AS category, i.description, i.date
+                  FROM incomes i
+                  JOIN income_categories ic ON i.category_id = ic.id
+                  WHERE i.user_id = :user_id
+                  AND EXTRACT(YEAR FROM i.date) = :year
+                  AND EXTRACT(MONTH FROM i.date) = :month
+                  ORDER BY i.date DESC";
+    
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':year', $year, PDO::PARAM_INT);
+        $stmt->bindParam(':month', $month, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    public function deleteTransaction() {
+        $this->requireLogin();
+    
+        $data = json_decode(file_get_contents("php://input"), true);
+        $transactionId = $data['id'] ?? null;
+        $type = $data['type'] ?? null;
+    
+        if (!$transactionId || !$type) {
+            echo json_encode(["success" => false, "message" => "Nieprawidłowe dane"]);
+            exit();
+        }
+    
+        $database = new Database();
+        $db = $database->connect();
+    
+        session_start();
+        $user_id = $_SESSION['user_id'];
+    
+        if ($type === "expense") {
+            $query = "DELETE FROM expenses WHERE id = :id AND user_id = :user_id";
+        } else {
+            $query = "DELETE FROM incomes WHERE id = :id AND user_id = :user_id";
+        }
+    
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $transactionId, PDO::PARAM_INT);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        
+        if ($stmt->execute() && $stmt->rowCount() > 0) {
+            // Pobieramy nowe wartości po usunięciu
+            $selectedYear = $data['year'] ?? date('Y');
+            $selectedMonth = $data['month'] ?? date('m');
+    
+            $summaryData = $this->getSummaryData($user_id, $selectedYear, $selectedMonth);
+            
+            echo json_encode([
+                "success" => true,
+                "newBudget" => number_format($summaryData['budget'], 2, '.', ' ') . ' zł',
+                "newIncome" => number_format($summaryData['total_income'], 2, '.', ' ') . ' zł',
+                "newExpense" => number_format($summaryData['total_expense'], 2, '.', ' ') . ' zł'
+            ]);
+        } else {
+            echo json_encode(["success" => false, "message" => "Nie znaleziono transakcji"]);
+        }
+        exit();
+    }
+    
+    
+    
+
+
 }

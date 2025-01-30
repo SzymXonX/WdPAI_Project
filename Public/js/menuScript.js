@@ -151,3 +151,44 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+
+
+function toggleTransactionDetails(element) {
+    const details = element.querySelector(".transaction-details");
+    details.classList.toggle("visible");
+}
+
+
+function deleteTransaction(event, transactionId, type) {
+    event.stopPropagation(); // Nie rozwijaj opisu transakcji przy kliknięciu "Usuń"
+
+    const currentYear = document.getElementById("selected-year").value;
+    const currentMonth = document.getElementById("selected-month").value;
+
+    fetch('/deleteTransaction', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: transactionId, type: type, year: currentYear, month: currentMonth })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Usuwamy transakcję z listy
+            event.target.closest(".transaction").remove();
+
+            // Aktualizujemy budżet, przychody i wydatki
+            document.getElementById("summary-wydatki").value = data.newExpense;
+            document.getElementById("summary-przychody").value = data.newIncome;
+            document.getElementById("summary-budzet").value = data.newBudget;
+        } else {
+            alert("Błąd: " + data.message);
+        }
+    })
+    .catch(error => {
+        console.error("Błąd podczas usuwania transakcji:", error);
+        alert("Wystąpił problem z połączeniem.");
+    });
+}
+
+
+
