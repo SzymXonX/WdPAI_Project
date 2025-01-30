@@ -16,19 +16,19 @@ if (!isset($_SESSION['user_id'])) {
     <title>SaveSpace</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Public/css/mainStyles.css">
-    <link rel="icon" href="Public/Images/logo_bez_tla.png" type="image/png">
+    <link rel="stylesheet" href="public/css/categoriesStyles.css">
+    <link rel="icon" href="public/images/logo_bez_tla.png" type="image/png">
 </head>
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="Public/Images/logo_bez_tla.png" alt="SaveSpace Logo">
+            <img src="public/images/logo_bez_tla.png" alt="SaveSpace Logo">
             <span>SaveSpace</span>
         </div>
         <ul class="nav-links">
             <li><a href="main">strona główna</a></li>
             <li><a href="categories" class="active">kategorie</a></li>
-            <li><a href="#">podsumowanie</a></li>
+            <li><a href="summary">podsumowanie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
         <div class="menu-icon" id="menu-toggle">
@@ -42,13 +42,58 @@ if (!isset($_SESSION['user_id'])) {
         <ul>
             <li><a href="main">strona główna</a></li>
             <li><a href="categories" class="active">kategorie</a></li>
-            <li><a href="#">podsumowanie</a></li>
+            <li><a href="summary">podsumowanie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
     </div>
+
     <main class="content">
-        
+        <div class="category-form-container">
+            <form class="form-container" method="POST" action="/addCategory">
+                <div class="form-header">
+                    <button type="button" class="transaction-type-btn active" data-type="expense">wydatek</button>
+                    <button type="button" class="transaction-type-btn" data-type="income">przychód</button>
+                </div>
+
+                <input type="hidden" id="category-type" name="category-type" value="expense">
+
+                <div class="form-group">
+                    <label for="category-name">nazwa kategorii</label>
+                    <input type="text" id="category-name" name="category-name" required>
+                </div>
+
+                <button type="submit" class="add-button">dodaj kategorię</button>
+            </form>
+        </div>
+
+        <div class="categories-container">
+            <div class="expenses-container">
+                <h2 class="section-title">kategorie wydatków</h2>
+                <ul id="expense-category-list">
+                    <?php foreach ($categories as $category): ?>
+                        <li>
+                            <span><?= htmlspecialchars($category->getName()); ?></span>
+                            <button class="delete-category-btn" onclick="deleteCategory(<?= $category->getId(); ?>, 'expense')">usuń</button>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+
+            <div class="incomes-container">
+                <h2 class="section-title">kategorie przychodów</h2>
+                <ul id="income-category-list">
+                    <?php foreach ($incomeCategories as $category): ?>
+                        <li>
+                            <span><?= htmlspecialchars($category->getName()); ?></span>
+                            <button class="delete-category-btn" onclick="deleteCategory(<?= $category->getId(); ?>, 'income')">usuń</button>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+
     </main>
-    <script src="Public/js/menuScript.js"></script>
+
+    <script src="public/js/categoriesScript.js"></script>
 </body>
 </html>
