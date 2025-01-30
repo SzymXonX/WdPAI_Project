@@ -36,3 +36,5 @@ class Router
         $object->$action($id);
     }
 }
+
+
