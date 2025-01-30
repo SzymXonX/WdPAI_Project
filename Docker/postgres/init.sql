@@ -28,7 +28,7 @@ CREATE TABLE expenses (
     amount DECIMAL(10,2) NOT NULL,
     category_id INT NOT NULL,
     description TEXT,
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 );
@@ -40,7 +40,7 @@ CREATE TABLE incomes (
     amount DECIMAL(10,2) NOT NULL,
     category_id INT NOT NULL,
     description TEXT,
-    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    date TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES income_categories(id) ON DELETE CASCADE
 );
@@ -139,32 +139,3 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER after_income_delete
 AFTER DELETE ON incomes
 FOR EACH ROW EXECUTE FUNCTION update_summary_income_delete();
-
-
-/* Wpisanie danych */
-INSERT INTO categories (name) VALUES
-('Jedzenie'),
-('Transport'),
-('Zakupy'),
-('Mieszkanie'),
-('Zdrowie'),
-('Rozrywka'),
-('Inne');
-
-INSERT INTO income_categories (name) VALUES
-('Pensja'),
-('Premia'),
-('Inwestycje'),
-('Zwroty'),
-('Inne');
-
-INSERT INTO expenses (user_id, amount, category_id, description) VALUES
-(1, 50.00, 1, 'Obiad w restauracji'),
-(1, 80.00, 2, 'Bilet miesięczny Kraków'),
-(1, 200.00, 3, 'Spodnie w Reserved');
-
-INSERT INTO incomes (user_id, amount, category_id , description) VALUES
-(1, 3000.00, 1, 'Wynagrodzenie za pracę'),
-(1, 500.00, 2, 'Premia za dobre wyniki w pracy'),
-(1, 200.00, 4, 'Zwrot za spodnie');
-

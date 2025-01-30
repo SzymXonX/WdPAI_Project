@@ -19,6 +19,10 @@ services:
       dockerfile: Docker/php/Dockerfile
     volumes:
       - .:/app/
+    depends_on:
+      - postgres
+    command: [ "sh", "-c", "sleep 10 && php /app/initialize_db.php && php-fpm" ]
+
 
   postgres:
     image: postgres:latest
