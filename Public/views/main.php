@@ -16,41 +16,141 @@ if (!isset($_SESSION['user_id'])) {
     <title>SaveSpace</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton+SC&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="Public/css/mainStyles.css">
-    <link rel="icon" href="Public/Images/logo_bez_tla.png" type="image/png">
+    <link rel="stylesheet" href="public/css/mainStyles.css">
+    <link rel="icon" href="public/images/logo_bez_tla.png" type="image/png">
 </head>
 <body>
-<nav class="navbar">
-        <div class="logo">
-            <img src="Public/Images/logo_bez_tla.png" alt="SaveSpace Logo">
-            <span>SaveSpace</span>
-        </div>
-        <ul class="nav-links">
-            <li><a href="main" class="active">strona główna</a></li>
-            <li><a href="#">wydatki</a></li>
-            <li><a href="#">przychody</a></li>
-            <li><a href="categories">kategorie</a></li>
-            <li><a href="settings">ustawienia</a></li>
-        </ul>
-        <div class="menu-icon" id="menu-toggle">
-            <svg width="40" height="35" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0.78125 3.51562H21.0938C21.5252 3.51562 21.875 3.16587 21.875 2.73438V0.78125C21.875 0.349756 21.5252 0 21.0938 0H0.78125C0.349756 0 0 0.349756 0 0.78125V2.73438C0 3.16587 0.349756 3.51562 0.78125 3.51562ZM0.78125 11.3281H21.0938C21.5252 11.3281 21.875 10.9784 21.875 10.5469V8.59375C21.875 8.16226 21.5252 7.8125 21.0938 7.8125H0.78125C0.349756 7.8125 0 8.16226 0 8.59375V10.5469C0 10.9784 0.349756 11.3281 0.78125 11.3281ZM0.78125 19.1406H21.0938C21.5252 19.1406 21.875 18.7909 21.875 18.3594V16.4062C21.875 15.9748 21.5252 15.625 21.0938 15.625H0.78125C0.349756 15.625 0 15.9748 0 16.4062V18.3594C0 18.7909 0.349756 19.1406 0.78125 19.1406Z" fill="black"/>
-            </svg>
-        </div>
+    <nav class="navbar">
+            <div class="logo">
+                <img src="public/images/logo_bez_tla.png" alt="savespace logo">
+                <span>SaveSpace</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="main" class="active">strona główna</a></li>
+                <li><a href="categories">kategorie</a></li>
+                <li><a href="#">podsumowanie</a></li>
+                <li><a href="settings">ustawienia</a></li>
+            </ul>
+            <div class="menu-icon" id="menu-toggle">
+                <svg width="40" height="35" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="m0.78125 3.51562h20.3125c0.4315 0 0.78125-0.349756 0.78125-0.78125v-1.95312c0-0.431494-0.34975-0.78125-0.78125-0.78125h-20.3125c-0.431494 0-0.78125 0.349756-0.78125 0.78125v1.95312c0 0.431494 0.349756 0.78125 0.78125 0.78125zm0 7.81248h20.3125c0.4315 0 0.78125-0.349756 0.78125-0.78125v-1.95312c0-0.431494-0.34975-0.78125-0.78125-0.78125h-20.3125c-0.431494 0-0.78125 0.349756-0.78125 0.78125v1.95312c0 0.431494 0.349756 0.78125 0.78125 0.78125zm0 7.81248h20.3125c0.4315 0 0.78125-0.349756 0.78125-0.78125v-1.95312c0-0.431494-0.34975-0.78125-0.78125-0.78125h-20.3125c-0.431494 0-0.78125 0.349756-0.78125 0.78125v1.95312c0 0.431494 0.349756 0.78125 0.78125 0.78125z" fill="black"/>
+                </svg>
+            </div>
     </nav>
 
     <div class="sidebar-menu" id="sidebar-menu">
         <ul>
             <li><a href="main" class="active">strona główna</a></li>
-            <li><a href="#">wydatki</a></li>
-            <li><a href="#">przychody</a></li>
             <li><a href="categories">kategorie</a></li>
+            <li><a href="#">podsumowanie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
     </div>
+
     <main class="content">
-        
+        <!-- Wyświetlanie wiadomości na stronie -->
+        <?php if (isset($_SESSION['messages']) && !empty($_SESSION['messages'])): ?>
+            <div class="<?= isset($_SESSION['success']) ? 'success-messages' : 'error-messages' ?>">
+                <?php foreach ($_SESSION['messages'] as $message): ?>
+                    <p><?= htmlspecialchars($message); ?></p>
+                <?php endforeach; ?>
+            </div>
+            <?php unset($_SESSION['messages'], $_SESSION['success']); ?>
+        <?php endif; ?>
+
+        <div class="dashboard-container">
+            <div class="dashboard-row">
+                <div class="summary-container">
+                    <div class="date-selector">
+                        <button id="prev-month" class="arrow-button">&lt;</button>
+                        <span id="current-date" data-year="<?= $selectedYear ?>" data-month="<?= $selectedMonth ?>">
+                            <?= $selectedYear . ' ' . strftime('%B', mktime(0, 0, 0, $selectedMonth, 1)); ?>
+                        </span>
+                        <button id="next-month" class="arrow-button">&gt;</button>
+                    </div>
+
+                    <div class="summary-items">
+                        <div class="summary-item">
+                            <span id="wydatki" class="summary-label">wydatki</span>
+                            <input id="summary-wydatki" class="summary-value" type="text" value="<?= number_format($summaryData['total_expense'], 2, '.', ' ') . ' zł' ?>" readonly>
+                        </div>
+                        <div class="summary-item">
+                            <span id="przychody" class="summary-label">przychody</span>
+                            <input id="summary-przychody" class="summary-value" type="text" value="<?= number_format($summaryData['total_income'], 2, '.', ' ') . ' zł' ?>" readonly>
+                        </div>
+                        <div class="summary-item">
+                            <span id="budzet" class="summary-label">budżet</span>
+                            <input id="summary-budzet" class="summary-value" type="text" value="<?= number_format($summaryData['budget'], 2, '.', ' ') . ' zł' ?>" readonly>
+                        </div>
+                    </div>
+                </div>
+
+
+                <form class="form-container" method="POST" action="/add">
+                    <div class="form-content">
+                        <div class="form-row">
+                            <div class="form-header">
+                                <button type="button" class="transaction-type-btn active" data-type="expense">wydatek</button>
+                                <button type="button" class="transaction-type-btn" data-type="income">przychód</button>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="amount">kwota</label>
+                                <input type="number" id="amount" name="amount" step="0.01" placeholder="0.00" required>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="transaction-type" name="transaction-type" value="expense">
+                        <input type="hidden" id="selected-year" name="selected-year" value="<?= $selectedYear ?>">
+                        <input type="hidden" id="selected-month" name="selected-month" value="<?= $selectedMonth ?>">
+
+
+                        <div class="form-group">
+                            <label for="category">Kategoria</label>
+                            <select id="category" name="category">
+                                <optgroup label="Kategorie wydatków" id="expense-categories">
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= $category->getId(); ?>"><?= htmlspecialchars($category->getName()); ?></option>
+                                    <?php endforeach; ?>
+                                </optgroup>
+                                
+                                <optgroup label="Kategorie przychodów" id="income-categories" style="display: none;">
+                                    <?php foreach ($incomeCategories as $category): ?>
+                                        <option value="<?= $category->getId(); ?>"><?= htmlspecialchars($category->getName()); ?></option>
+                                    <?php endforeach; ?>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        
+                        <div class="form-group">
+                            <label for="description">opis</label>
+                            <input id="description" name="description" rows="3">
+                        </div>
+
+                        <button type="submit" class="add-button">dodaj</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="transactions-container">
+            <div class="expenses-container">
+                <h2 class="section-title">wydatki</h2>
+                <div class="transactions-list" id="expenses-list">
+                    <!-- wydatki -->
+                </div>
+            </div>
+
+            <div class="incomes-container">
+                <h2 class="section-title">przychody</h2>
+                <div class="transactions-list" id="incomes-list">
+                    <!-- przychody -->
+                </div>
+            </div>
+        </div>
     </main>
-    <script src="Public/js/menuScript.js"></script>
+
+    <script src="public/js/menuscript.js"></script>
 </body>
 </html>
