@@ -148,7 +148,7 @@ if (!isset($_SESSION['user_id'])) {
 
                                 <div class="transaction-details">
                                     <p class="transaction-description"><?= htmlspecialchars($expense['description']); ?></p>
-                                    <button class="delete-button" onclick="deleteTransaction(event, <?= $expense['id']; ?>, 'expense')">🗑 Usuń</button>
+                                    <button class="delete-button" onclick="deleteTransaction(event, <?= $expense['id']; ?>, 'expense')"> Usuń</button>
                                 </div>
                             </div>
                         <?php endforeach; ?>
@@ -170,7 +170,7 @@ if (!isset($_SESSION['user_id'])) {
 
                                 <div class="transaction-details">
                                     <p class="transaction-description"><?= htmlspecialchars($income['description']); ?></p>
-                                    <button class="delete-button" onclick="deleteTransaction(event, <?= $income['id']; ?>, 'income')">🗑 Usuń</button>
+                                    <button class="delete-button" onclick="deleteTransaction(event, <?= $income['id']; ?>, 'income')"> Usuń</button>
                                 </div>
                             </div>
                         <?php endforeach; ?>

@@ -19,7 +19,7 @@ function initializeDatabase() {
             "last_name" => "Admin"
         ],
         [
-            "email" => "maria35maria@o2.pl",
+            "email" => "maria@o2.pl",
             "password" => "maria123",
             "first_name" => "Maria",
             "last_name" => "Koczur"

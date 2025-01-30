@@ -114,17 +114,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         transactions.forEach(transaction => {
+            const [date, time] = transaction.date.split(' '); // Podział na datę i godzinę
+
             const transactionElement = document.createElement("div");
             transactionElement.classList.add("transaction");
             transactionElement.innerHTML = `
                 <span class="transaction-category">${transaction.category}</span>
                 <span class="transaction-amount ${type === "expense" ? "negative" : "positive"}">
-                    ${type === "expense" ? "-" : "+"}${transaction.amount} zł
+                    ${type === "expense" ? "- " : "+ "}${transaction.amount} zł
                 </span>
-                <span class="transaction-date">${transaction.date}</span>
+                <span class="transaction-date">
+                    <span class="date-part">${date}</span>
+                    <span class="time-part">${time}</span>
+                </span>
                 <div class="transaction-details">
                     <p class="transaction-description">${transaction.description}</p>
-                    <button class="delete-button" onclick="deleteTransaction(event, ${transaction.id}, '${type}')">🗑 Usuń</button>
+                    <button class="delete-button" onclick="deleteTransaction(event, ${transaction.id}, '${type}')">Usuń</button>
                 </div>
             `;
 

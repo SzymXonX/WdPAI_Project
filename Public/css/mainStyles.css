@@ -39,9 +39,7 @@ body{
 	padding: 0;
 }
 
-.nav-links li{
-	display: inline;
-}
+.nav-links li{ display: inline; }
 
 .nav-links a{
 	text-decoration: none;
@@ -69,12 +67,8 @@ body{
 }
 
 @media (max-width: 1450px){
-	.nav-links{
-		display: none;
-	}
-	.menu-icon{
-		display: block;
-	}
+	.nav-links{ display: none; }
+	.menu-icon{ display: block; }
 }
 
 .sidebar-menu{
@@ -90,9 +84,7 @@ body{
 	z-index: 99;
 }
 
-.sidebar-menu.active{
-	right: 0;
-}
+.sidebar-menu.active{ right: 0; }
 
 .sidebar-menu ul{
 	list-style: none;
@@ -121,26 +113,11 @@ body{
 }
 
 @media (max-width: 720px){
-	.logo img{
-		height: 60px;
-	}
-
-	.logo span{
-		font-size: 30px;
-	}
-
-	.menu-icon svg{
-		width: 30px;
-		height: 30px;
-	}
-
-	.sidebar-menu{
-		width: 200px;
-	}
-
-	.sidebar-menu ul li a{
-		font-size: 18px;
-	}
+	.logo img{ height: 60px; }
+	.logo span{ font-size: 30px; }
+	.menu-icon svg{ width: 30px;height: 30px; }
+	.sidebar-menu{ width: 200px; }
+	.sidebar-menu ul li a{ font-size: 18px; }
 }
 /*^^^^^ Menu ^^^^^*/
 
@@ -192,9 +169,7 @@ h2{
     border-radius: 5px;
 }
 
-.arrow-button:hover {
-    background: #777777;
-}
+.arrow-button:hover { background: #777777; }
 
 
 
@@ -202,12 +177,12 @@ h2{
 .error-messages,
 .success-messages {
     background-color: #ffdddd;
-    color: #d8000c;
+    color: #C50303;
     padding: 10px;
     border-radius: 5px;
     width: 50%;
     margin: 10px auto;
-    border: 1px solid #d8000c;
+    border: 1px solid #C50303;
     text-align: center;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -271,16 +246,9 @@ h2{
     font-family: 'Anton SC', sans-serif;
 }
 
-#wydatki, #summary-wydatki{
-    color:#C50303;
-}
-#przychody, #summary-przychody{
-    color:#056911;
-}
-
-#budzet, #summary-budzet{
-	color:black;
-}
+#wydatki, #summary-wydatki{ color:#C50303; }
+#przychody, #summary-przychody{ color:#056911; }
+#budzet, #summary-budzet{ color:black; }
 
 .form-content{
 	display: flex;
@@ -315,7 +283,7 @@ h2{
 }
 
 .transaction-type-btn.active {
-    background-color: green;
+    background-color: #056911;
 }
 
 .form-group{
@@ -325,7 +293,7 @@ h2{
 }
 
 .form-group label{
-	font-size: 18px;
+	font-size: 25px;
 	color: #333;
     white-space: nowrap;
 }
@@ -339,9 +307,7 @@ h2{
 	background: #d9d9d9;
 }
 
-.form-group input, .form-group select{
-    width: 100%;
-}
+.form-group input, .form-group select{ width: 100%; }
 
 .add-button{
 	background: #056911;
@@ -349,15 +315,13 @@ h2{
 	padding: 15px;
 	border: none;
 	border-radius: 8px;
-	font-size: 18px;
+	font-size: 25px;
 	cursor: pointer;
 	transition: background 0.3s;
     font-family: 'Anton SC', sans-serif;
 }
 
-.add-button:hover{
-	background: #03450c;
-}
+.add-button:hover{ background: #03450c; }
 /* ^^^^ Górne kontenery na podsumowanie i dodawanie ^^^^ */
 
 
@@ -372,6 +336,7 @@ h2{
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+    
 }
 
 .expenses-container, .incomes-container {
@@ -400,7 +365,10 @@ h2{
     background: #f9f9f9;
 }
 
-
+.no-transactions{
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+}
 
 
 .transaction {
@@ -412,20 +380,13 @@ h2{
     cursor: pointer;
     position: relative;
     transition: background-color 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
 }
 
-.transaction:hover {
-    background-color: #f9f9f9;
-}
-
-
-.transaction-amount.negative {
-    color: red;
-}
-
-.transaction-amount.positive {
-    color: green;
-}
+.transaction:hover { background-color: #f9f9f9; }
+.transaction-amount.negative { color: #C50303; }
+.transaction-amount.positive { color: #056911; }
 
 .transaction-date {
     font-size: 14px;
@@ -447,9 +408,7 @@ h2{
 	font-weight: normal;
 }
 
-.transaction-details.visible {
-    display: block;
-}
+.transaction-details.visible { display: block; }
 
 .transaction-description {
     margin-bottom: 10px;
@@ -457,7 +416,7 @@ h2{
 }
 
 .delete-button {
-    background-color: red;
+    background-color: #C50303;
     color: white;
     border: none;
     padding: 5px 10px;
@@ -465,55 +424,29 @@ h2{
     border-radius: 5px;
 }
 
-.delete-button:hover {
-    background-color: darkred;
-}
-
-
-
-
-
+.delete-button:hover { background-color: darkred;}
 
 /* Responsywność */
 @media (max-width: 1200px){
-	.dashboard-container{
-		grid-template-columns: 1fr;
-	}
-	
-	.summary-container{
-		flex-direction: row;
-		flex-wrap: wrap;
-	}
-	
-	.summary-item{
-		flex: 1;
-		min-width: 250px;
-	}
+	.dashboard-container{ grid-template-columns: 1fr; }
+	.summary-container{ flex-direction: row; flex-wrap: wrap; }
+	.summary-item{ flex: 1; min-width: 250px; }
 }
 
 @media (max-width: 600px){
-	.form-row{
-		flex-direction: column;
-		gap: 10px;
-	}
-
-	.summary-item{
-		flex-direction: column;
-	}
-
-	.summary-value{
-		width: 100%;
-	}
-
-	.form-group{
-		flex-direction: column;
-	}
-
-	.form-content{
-		gap: 5px;
-	}
-
-	.add-button{
-		padding: 10px;
-	}
+	.form-row{ flex-direction: column; gap: 10px; }
+	.summary-item{ flex-direction: column; }
+	.summary-value{ width: 100%; }
+	.form-group{ flex-direction: column; }
+	.form-content{ gap: 5px; }
+	.add-button{ padding: 10px; }
+    .transaction-list{ padding: 3px;}
+    .transaction-date {
+        display: flex;
+        flex-direction: column; /* Zawsze w dwóch liniach */
+        text-align: right; /* Wyrównanie do prawej */
+    }
+    .transaction{ padding: 3px;}
+    .incomes-container, .expenses-container{ padding: 3px; }
+    .transaction-list{ padding: 3px;}
 }

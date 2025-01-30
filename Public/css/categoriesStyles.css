@@ -299,6 +299,8 @@ h2 {
     border-radius: 5px;
     font-size: 18px;
     color: #333;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
 }
 
 .delete-category-btn {
