@@ -49,7 +49,6 @@ function initializeDatabase() {
             }
         }
 
-        // Wczytanie reszty danych z `data.sql`
         $sql = file_get_contents(__DIR__ . '/data.sql');
         $db->exec($sql);
         echo "✅ Załadowano `data.sql`.\n";
@@ -59,6 +58,5 @@ function initializeDatabase() {
     }
 }
 
-// Uruchomienie skryptu
 initializeDatabase();
 ?>

@@ -28,7 +28,7 @@ if (!isset($_SESSION['user_id'])) {
         <ul class="nav-links">
             <li><a href="main">strona główna</a></li>
             <li><a href="categories">kategorie</a></li>
-            <li><a href="#">podsumowanie</a></li>
+            <li><a href="summary">podsumowanie</a></li>
             <li><a href="settings" class="active">ustawienia</a></li>
         </ul>
         <div class="menu-icon" id="menu-toggle">
@@ -42,7 +42,7 @@ if (!isset($_SESSION['user_id'])) {
         <ul>
             <li><a href="main">strona główna</a></li>
             <li><a href="categories">kategorie</a></li>
-            <li><a href="#">podsumowanie</a></li>
+            <li><a href="summary">podsumowanie</a></li>
             <li><a href="settings" class="active">ustawienia</a></li>
         </ul>
     </div>

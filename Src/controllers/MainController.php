@@ -13,8 +13,8 @@ class MainController extends AppController {
         $selectedMonth = $_GET['month'] ?? date('m');
     
         $summaryData = $this->getSummaryData($user_id, $selectedYear, $selectedMonth);
-        $categories = $this->getCategories(); // Pobieramy kategorie wydatków
-        $incomeCategories = $this->getIncomeCategories(); // Pobieramy kategorie przychodów
+        $categories = $this->getCategories(); 
+        $incomeCategories = $this->getIncomeCategories();
         $expenses = $this->getUserExpenses($user_id, $selectedYear, $selectedMonth);
         $incomes = $this->getUserIncomes($user_id, $selectedYear, $selectedMonth);
     
