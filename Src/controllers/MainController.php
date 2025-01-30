@@ -1,12 +1,153 @@
 <?php
 require_once 'AppController.php';
+require_once __DIR__ . '/../models/Category.php';
+
 
 class MainController extends AppController {
-
-    public function Main() {
+    public function main() {
         $this->requireLogin();
-
-        $this->render('main');
+    
+        session_start();
+        $user_id = $_SESSION['user_id'];
+    
+        $selectedYear = $_GET['year'] ?? date('Y');
+        $selectedMonth = $_GET['month'] ?? date('m');
+    
+        $summaryData = $this->getSummaryData($user_id, $selectedYear, $selectedMonth);
+        $categories = $this->getCategories(); 
+        $incomeCategories = $this->getIncomeCategories(); 
+    
+        $this->render('main', [
+            'summaryData' => $summaryData,
+            'categories' => $categories,
+            'incomeCategories' => $incomeCategories,
+            'selectedYear' => $selectedYear,
+            'selectedMonth' => $selectedMonth
+        ]);
     }
+    
+    
+    // Pobieranie danych sumarycznych
+    private function getSummaryData($user_id, $year, $month) {
+        $database = new Database();
+        $db = $database->connect();
+    
+        $query = "SELECT total_income, total_expense, budget FROM summary 
+                  WHERE user_id = :user_id AND year = :year AND month = :month";
+    
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->bindParam(':year', $year, PDO::PARAM_INT);
+        $stmt->bindParam(':month', $month, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        $summary = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        return $summary ?: ['total_income' => 0.00, 'total_expense' => 0.00, 'budget' => 0.00];
+    }
+    
 
+    // Pobieranie kategorii
+    private function getCategories() {
+        $this->requireLogin();
+    
+        $database = new Database();
+        $db = $database->connect();
+    
+        $query = "SELECT id, name FROM categories ORDER BY name ASC";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+    
+        $categories = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $categories[] = new Category($row['id'], $row['name']);
+        }
+    
+        return $categories;
+    }
+    private function getIncomeCategories() {
+        $this->requireLogin();
+    
+        $database = new Database();
+        $db = $database->connect();
+    
+        $query = "SELECT id, name FROM income_categories ORDER BY name ASC";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+    
+        $incomeCategories = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $incomeCategories[] = new Category($row['id'], $row['name']);
+        }
+    
+        return $incomeCategories;
+    }
+    
+
+    // Dodawanie wydatków i przychodów na stronie głównej
+    public function add() {
+        $this->requireLogin();
+    
+        session_start();
+        $user_id = $_SESSION['user_id'];
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $transactionType = $_POST['transaction-type'] ?? null;
+            $amount = trim($_POST['amount']);
+            $category_id = $_POST['category'] ?? null;
+            $description = trim($_POST['description']);
+    
+            $selectedYear = $_POST['selected-year'] ?? date('Y');
+            $selectedMonth = $_POST['selected-month'] ?? date('m');
+    
+            $_SESSION['messages'] = [];
+    
+            if (empty($transactionType) || empty($amount) || empty($category_id)) {
+                $_SESSION['messages'][] = "Błąd: Wszystkie pola muszą być wypełnione.";
+            }
+    
+            if (!is_numeric($amount) || $amount <= 0) {
+                $_SESSION['messages'][] = "Błąd: Kwota musi być liczbą większą od zera.";
+            }
+    
+            if (!empty($_SESSION['messages'])) {
+                header("Location: /main?year=$selectedYear&month=$selectedMonth");
+                exit();
+            }
+    
+            try {
+                $database = new Database();
+                $db = $database->connect();
+    
+                if ($transactionType === "expense") {
+                    $query = "INSERT INTO expenses (user_id, amount, category_id, description, date)
+                              VALUES (:user_id, :amount, :category_id, :description, NOW())";
+                } else {
+                    $query = "INSERT INTO incomes (user_id, amount, category_id, description, date)
+                              VALUES (:user_id, :amount, :category_id, :description, NOW())";
+                }                
+    
+                $stmt = $db->prepare($query);
+                $stmt->bindParam(':user_id', $user_id);
+                $stmt->bindParam(':amount', $amount);
+                $stmt->bindParam(':category_id', $category_id, PDO::PARAM_INT);
+                $stmt->bindParam(':description', $description);
+    
+                if ($stmt->execute()) {
+                    $_SESSION['messages'][] = "✅ Transakcja została dodana!";
+                    $_SESSION['success'] = true;
+                    header("Location: /main?year=$selectedYear&month=$selectedMonth");
+                    exit();
+                } else {
+                    $_SESSION['messages'][] = "❌ Błąd: Wystąpił problem podczas dodawania transakcji.";
+                }
+            } catch (Exception $e) {
+                $_SESSION['messages'][] = "❌ Błąd: " . $e->getMessage();
+            }
+    
+            header("Location: /main?year=$selectedYear&month=$selectedMonth");
+            exit();
+        }
+    }
+    
 }
