@@ -17,5 +17,6 @@ Router::post('register_user', 'SecurityController');
 Router::post('logout', 'SecurityController');
 Router::post('changeData', 'SettingsController');
 Router::post('add', 'MainController');
+Router::post('deleteTransaction', 'MainController');
 
 Router::run($path);
