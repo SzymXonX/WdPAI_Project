@@ -4,14 +4,15 @@ $ git clone https://github.com/SzymXonX/WdPAI_Project.git
 ```
 
 # Uruchamianie:
-1. Uruchom aplikacje Docker
-2. Zbuduj docker-compose
+1. Otwórz pobrane repozytorium w np. Visual Studio Code
+2. Uruchom aplikacje Docker
+3. Zbuduj docker-compose
 ```
 $ docker-compose up --build
 ```
-3. Po załadowaniu wszystkich kontenerów i serwisów udaj się w przeglądarce na adres http://localhost:8080/
-4. Zaloguj się na utworzonych już użytkowników lub utwórz własne konto za pomocą "Nie masz konta?"
-5. Korzystaj z aplikacji! 
+4. Po załadowaniu wszystkich kontenerów i serwisów udaj się w przeglądarce na adres http://localhost:8080/
+5. Zaloguj się na utworzonych już użytkowników lub utwórz własne konto za pomocą "Nie masz konta?"
+6. Korzystaj z aplikacji! 
 
 # Dostępni użytkownicy
 ## Admin:
