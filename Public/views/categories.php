@@ -20,16 +20,15 @@ if (!isset($_SESSION['user_id'])) {
     <link rel="icon" href="Public/Images/logo_bez_tla.png" type="image/png">
 </head>
 <body>
-<nav class="navbar">
+    <nav class="navbar">
         <div class="logo">
             <img src="Public/Images/logo_bez_tla.png" alt="SaveSpace Logo">
             <span>SaveSpace</span>
         </div>
         <ul class="nav-links">
             <li><a href="main">strona główna</a></li>
-            <li><a href="#">wydatki</a></li>
-            <li><a href="#">przychody</a></li>
             <li><a href="categories" class="active">kategorie</a></li>
+            <li><a href="#">podsumowanie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
         <div class="menu-icon" id="menu-toggle">
@@ -42,9 +41,8 @@ if (!isset($_SESSION['user_id'])) {
     <div class="sidebar-menu" id="sidebar-menu">
         <ul>
             <li><a href="main">strona główna</a></li>
-            <li><a href="#">wydatki</a></li>
-            <li><a href="#">przychody</a></li>
             <li><a href="categories" class="active">kategorie</a></li>
+            <li><a href="#">podsumowanie</a></li>
             <li><a href="settings">ustawienia</a></li>
         </ul>
     </div>
