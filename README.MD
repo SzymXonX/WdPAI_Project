@@ -151,7 +151,7 @@ Connection/Password - password
 ![Strona główna](ScreenShots/mainPage.png)
 ![Kategorie](ScreenShots/category.png)
 ![Podsumowanie](ScreenShots/summary.png)
-![Ustawienia](Settings/category.png)
+![Ustawienia](ScreenShots/settings.png)
 
 
 # Autor
