@@ -5,7 +5,8 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     first_name VARCHAR(255),
-    last_name VARCHAR(255)
+    last_name VARCHAR(255),
+    role VARCHAR(40) DEFAULT 'user'
 );
 
 /* Tabela kategorii */
@@ -139,3 +140,20 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER after_income_delete
 AFTER DELETE ON incomes
 FOR EACH ROW EXECUTE FUNCTION update_summary_income_delete();
+
+
+
+/* Funckja do pobierania roli */
+CREATE OR REPLACE FUNCTION getRole(user_id INT) 
+RETURNS VARCHAR(40) AS 
+$$
+DECLARE 
+    user_role VARCHAR(40);
+BEGIN
+    SELECT role INTO user_role 
+    FROM users 
+    WHERE id = user_id;
+
+    RETURN COALESCE(user_role, 'brak użytkownika'); 
+END;
+$$ LANGUAGE plpgsql;
