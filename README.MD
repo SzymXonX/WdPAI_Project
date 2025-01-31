@@ -102,6 +102,7 @@ Connection/Password - password
 
 /Public
     /css
+        - adminStyles.css
         - categoriesStyles.css
         - mainStyles.css
         - settingsStyles.css
@@ -113,11 +114,13 @@ Connection/Password - password
         - logo.png
         - open_eye_password.png
     /js
+        - adminScript.js
         - categoriesScript.js
         - menuScript.js
         - script.js
         - summaryScript.js
     /views
+        - admin.php
         - categories.php
         - login.php
         - main.php
@@ -125,7 +128,9 @@ Connection/Password - password
         - settings.php
         - summary.php
 /ScreenShots
+    - Admin.png
     - category.png
+    - ERD_Diagram.png
     - login.png
     - mainPage.png
     - register.png
@@ -134,6 +139,7 @@ Connection/Password - password
 
 /Src
     /controllers
+        - AdminController.php
         - AppController.php
         - CategoriesController.php
         - DefaultController.php
@@ -148,11 +154,9 @@ Connection/Password - password
         - User.php
 
 - .gitignore
-- data.sql
 - Database.php
 - docker-compose.yml
 - index.php
-- initialize_db.php
 - README.MD
 - Routing.php
 ```
@@ -163,6 +167,7 @@ Connection/Password - password
 ![Kategorie](ScreenShots/category.png)
 ![Podsumowanie](ScreenShots/summary.png)
 ![Ustawienia](ScreenShots/settings.png)
+![Admin](ScreenShots/Admin.png)
 
 
 # Baza danych
@@ -175,6 +180,10 @@ Triggery:
 - update_summary_expense_delete(): Po usunięciu rekordu z tabeli Expenses aktualizuje Summary pole total_expense usuwając wydatek z reszty
 - update_summary_income(): Po dodaniu rekordu do tabeli Incomes aktualizuje tabele Summary pole total_income  dodając przychód do reszty
 - update_summary_income_delete(): Po usunięciu rekordu z tabeli Incomes aktualizuje Summary pole total_income usuwając przychód z reszty
+
+Widoki:
+- user_financial_summary(): Widok summarycznych wydatków/przychodów całościowych użytkowników
+- category_financial_summary(): Widok sumaryczny kategorii wydatków/przychodów użytkowników
 
 ## ERD Diagram
 ![ERD](ScreenShots/ERD_Diagram.png)
