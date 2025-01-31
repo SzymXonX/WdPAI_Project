@@ -5,6 +5,18 @@ function initializeDatabase() {
     $database = new Database();
     $db = $database->connect();
 
+    // Sprawdzenie, czy którakolwiek tabela zawiera dane
+    $tables = ['users', 'incomes', 'expenses', 'categories', 'income_categories', 'summary'];
+    foreach ($tables as $table) {
+        $stmt = $db->query("SELECT COUNT(*) FROM $table");
+        if ($stmt->fetchColumn() > 0) {
+            echo "🔹 Baza danych już zawiera dane. Pomijam inicjalizację.\n";
+            return;
+        }
+    }
+
+    echo "⚡ Inicjalizacja bazy danych...\n";
+
     $users = [
         [
             "email" => "koczurszymon@gmail.com",
@@ -34,7 +46,7 @@ function initializeDatabase() {
 
             if ($stmt->rowCount() === 0) {
                 $hashedPassword = password_hash($user['password'], PASSWORD_BCRYPT);
-                
+
                 $stmt = $db->prepare("INSERT INTO users (email, password, first_name, last_name) 
                                       VALUES (:email, :password, :first_name, :last_name)");
                 $stmt->bindParam(':email', $user['email']);
@@ -45,7 +57,7 @@ function initializeDatabase() {
 
                 echo "✅ Użytkownik " . $user['email'] . " dodany.\n";
             } else {
-                echo "Użytkownik " . $user['email'] . " już istnieje.\n";
+                echo "ℹ️ Użytkownik " . $user['email'] . " już istnieje.\n";
             }
         }
 
