@@ -1,5 +1,6 @@
 <?php
 require_once 'Database.php';
+require_once __DIR__ . '/Src/models/User.php'; // Upewnij się, że ścieżka do pliku User.php jest poprawna
 
 function initializeDatabase() {
     $database = new Database();
@@ -17,50 +18,38 @@ function initializeDatabase() {
 
     echo "⚡ Inicjalizacja bazy danych...\n";
 
+    // Tworzenie użytkowników za pomocą klasy User
     $users = [
-        [
-            "email" => "koczurszymon@gmail.com",
-            "password" => "1234",
-            "first_name" => "Szymon",
-            "last_name" => "Koczur"
-        ],
-        [
-            "email" => "admin@example.com",
-            "password" => "admin",
-            "first_name" => "Admin",
-            "last_name" => "Admin"
-        ],
-        [
-            "email" => "maria@o2.pl",
-            "password" => "maria123",
-            "first_name" => "Maria",
-            "last_name" => "Koczur"
-        ]
+        new User(null, "koczurszymon@gmail.com", "1234", "Szymon", "Koczur", "user"),
+        new User(null, "admin@example.com", "admin", "Admin", "Admin", "admin"),
+        new User(null, "maria@o2.pl", "maria123", "Maria", "Koczur", "user")
     ];
 
     try {
         foreach ($users as $user) {
             $stmt = $db->prepare("SELECT id FROM users WHERE email = :email");
-            $stmt->bindParam(':email', $user['email']);
+            $stmt->bindParam(':email', $user->getEmail());
             $stmt->execute();
 
             if ($stmt->rowCount() === 0) {
-                $hashedPassword = password_hash($user['password'], PASSWORD_BCRYPT);
+                $hashedPassword = password_hash($user->getPassword(), PASSWORD_BCRYPT);
 
-                $stmt = $db->prepare("INSERT INTO users (email, password, first_name, last_name) 
-                                      VALUES (:email, :password, :first_name, :last_name)");
-                $stmt->bindParam(':email', $user['email']);
+                $stmt = $db->prepare("INSERT INTO users (email, password, first_name, last_name, role) 
+                                      VALUES (:email, :password, :first_name, :last_name, :role)");
+                $stmt->bindParam(':email', $user->getEmail());
                 $stmt->bindParam(':password', $hashedPassword);
-                $stmt->bindParam(':first_name', $user['first_name']);
-                $stmt->bindParam(':last_name', $user['last_name']);
+                $stmt->bindParam(':first_name', $user->getFirstName());
+                $stmt->bindParam(':last_name', $user->getLastName());
+                $stmt->bindParam(':role', $user->getRole());
                 $stmt->execute();
 
-                echo "✅ Użytkownik " . $user['email'] . " dodany.\n";
+                echo "✅ Użytkownik " . $user->getEmail() . " dodany.\n";
             } else {
-                echo "ℹ️ Użytkownik " . $user['email'] . " już istnieje.\n";
+                echo "ℹ️ Użytkownik " . $user->getEmail() . " już istnieje.\n";
             }
         }
 
+        // Wczytanie danych z `data.sql`
         $sql = file_get_contents(__DIR__ . '/data.sql');
         $db->exec($sql);
         echo "✅ Załadowano `data.sql`.\n";
@@ -70,5 +59,6 @@ function initializeDatabase() {
     }
 }
 
+// Uruchomienie funkcji inicjalizacji bazy danych
 initializeDatabase();
 ?>

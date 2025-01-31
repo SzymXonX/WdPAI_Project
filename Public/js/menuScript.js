@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         transactions.forEach(transaction => {
-            const [date, time] = transaction.date.split(' '); // Podział na datę i godzinę
+            const [date, time] = transaction.date.split(' ');
 
             const transactionElement = document.createElement("div");
             transactionElement.classList.add("transaction");

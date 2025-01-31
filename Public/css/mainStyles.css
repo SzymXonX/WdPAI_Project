@@ -39,9 +39,7 @@ body{
 	padding: 0;
 }
 
-.nav-links li{
-	display: inline;
-}
+.nav-links li{ display: inline; }
 
 .nav-links a{
 	text-decoration: none;
@@ -69,12 +67,8 @@ body{
 }
 
 @media (max-width: 1450px){
-	.nav-links{
-		display: none;
-	}
-	.menu-icon{
-		display: block;
-	}
+	.nav-links{ display: none; }
+	.menu-icon{ display: block; }
 }
 
 .sidebar-menu{
@@ -90,9 +84,7 @@ body{
 	z-index: 99;
 }
 
-.sidebar-menu.active{
-	right: 0;
-}
+.sidebar-menu.active{ right: 0; }
 
 .sidebar-menu ul{
 	list-style: none;
@@ -121,73 +113,241 @@ body{
 }
 
 @media (max-width: 720px){
-	.logo img{
-		height: 60px;
-	}
-
-	.logo span{
-		font-size: 30px;
-	}
-
-	.menu-icon svg{
-		width: 30px;
-		height: 30px;
-	}
-
-	.sidebar-menu{
-		width: 200px;
-	}
-
-	.sidebar-menu ul li a{
-		font-size: 18px;
-	}
+	.logo img{ height: 60px; }
+	.logo span{ font-size: 30px; }
+	.menu-icon svg{ width: 30px;height: 30px; }
+	.sidebar-menu{ width: 200px; }
+	.sidebar-menu ul li a{ font-size: 18px; }
 }
+/*^^^^^ Menu ^^^^^*/
 
+/*vvvvv Dashboard vvvvv*/
 h2{
     font-weight: normal;
     font-family: 'Anton SC', sans-serif;
 }
 
-.dashboard{
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+.dashboard-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: auto;
+}
+
+
+.date-selector {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: black;
+}
+
+#current-date {
+    width: 150px;
+    text-align: center;
+    display: inline-block;
+}
+
+.arrow-button {
+    background: #909090;
+    border: none;
+    padding: 5px 10px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.arrow-button:hover { background: #777777; }
+
+
+
+/* Wyświetlanie komunikatów na stronie */
+.error-messages,
+.success-messages {
+    background-color: #ffdddd;
+    color: #C50303;
+    padding: 10px;
+    border-radius: 5px;
+    width: 50%;
+    margin: 10px auto;
+    border: 1px solid #C50303;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.success-messages {
+    background-color: #ddffdd;
+    color: #008000;
+    border: 1px solid #008000;
+}
+
+.error-messages p,
+.success-messages p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+/* -------------------------- */
+
+
+.summary-container, .form-container {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 529px;
+    color: black;
+    font-family: 'Anton SC', sans-serif;
+}
+
+.summary-container{
 	display: flex;
-	justify-content: space-between;
-	margin-bottom: 20px;
-	flex-wrap: wrap;
-	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center
 }
 
-.wydatki{
-	color: #C50303;
-}
-.przychody{
-	color: #056911;
-}
-.budzet{
-	color: black;
+.summary-item {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    padding: 5px 0;
 }
 
+.summary-label {
+    font-family: 'Anton SC', sans-serif;
+    color: black;
+    font-size: 40px;
+    margin-right: 10px;
+}
 
-/* Sekcje wydatków i przychodów */
+.summary-value {
+    background-color: #D9D9D9;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 25px;
+    padding: 5px;
+    text-align: center;
+    width: 289px;
+    height: 43px;
+    border-radius: 20px;
+    font-family: 'Anton SC', sans-serif;
+}
+
+#wydatki, #summary-wydatki{ color:#C50303; }
+#przychody, #summary-przychody{ color:#056911; }
+#budzet, #summary-budzet{ color:black; }
+
+.form-content{
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 10px auto;
+}
+
+.form-header {
+    display: flex;
+    gap: 8px;
+	margin-right: 10px;
+}
+
+.transaction-type-btn {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 25px;
+    background-color: #909090;
+    color: white;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+	font-family: 'Anton SC', sans-serif;
+}
+
+.transaction-type-btn.active {
+    background-color: #056911;
+}
+
+.form-group{
+	display: flex;
+    align-items: center;
+	gap: 8px;
+}
+
+.form-group label{
+	font-size: 25px;
+	color: #333;
+    white-space: nowrap;
+}
+
+.form-group select,
+.form-group input{
+	padding: 12px;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	background: #d9d9d9;
+}
+
+.form-group input, .form-group select{ width: 100%; }
+
+.add-button{
+	background: #056911;
+	color: white;
+	padding: 15px;
+	border: none;
+	border-radius: 8px;
+	font-size: 25px;
+	cursor: pointer;
+	transition: background 0.3s;
+    font-family: 'Anton SC', sans-serif;
+}
+
+.add-button:hover{ background: #03450c; }
+/* ^^^^ Górne kontenery na podsumowanie i dodawanie ^^^^ */
+
+
+
+/* vvvvv Dolne kontenery na wydatki i przychody vvvvv */
 .transactions-container {
     display: flex;
-    justify-content: center; /* Wyśrodkowanie na ekranie */
-    gap: 20px; /* Odstęp między elementami */
-    flex-wrap: wrap; /* Pozwala na przeniesienie do nowego wiersza na małych ekranach */
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
     margin-top: 20px;
-    width: 100%; /* Pełna szerokość kontenera */
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
+    
 }
 
 .expenses-container, .incomes-container {
     background: white;
     padding: 20px;
     border-radius: 10px;
-    width: 529px; /* Ustalona szerokość */
+    width: 529px;
     color: black;
     min-height: 300px;
     font-family: 'Anton SC', sans-serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Delikatny cień dla estetyki */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .section-title {
@@ -205,185 +365,88 @@ h2{
     background: #f9f9f9;
 }
 
+.no-transactions{
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+}
 
 
-
-/* Dodaj te style do głównego pliku CSS */
-.dashboard-container {
+.transaction {
     display: flex;
-    justify-content: center; /* Wyśrodkowanie całego dashboardu */
-    width: 100%;
-    margin-top: 20px;
-}
-.dashboard-row {
-    display: flex;
-    justify-content: center; /* Wyśrodkowanie elementów */
-    gap: 20px; /* Odstęp między kontenerami */
-    flex-wrap: nowrap; /* ZAPOBIEGA przechodzeniu do nowej linii */
-    width: 529px; /* Stała szerokość dla obu kontenerów */
-    margin: auto; /* Wyśrodkowanie */
-}
-
-.summary-container, .form-container {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%; /* Oba kontenery zajmują po 50% dostępnej szerokości */
-    color: black;
-    min-height: 300px;
-    font-family: 'Anton SC', sans-serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Cień dla estetyki */
-}
-
-.summary-item {
-    display: flex;
-    justify-content: flex-end; /* Tekst po lewej, input po prawej */
-    align-items: center; /* Wyrównanie do środka */
-    width: 100%;
-    padding: 5px 0; /* Odstęp pionowy */
-}
-
-.summary-label {
-    font-family: 'Anton SC', sans-serif;
-    color: black; /* Dostosuj kolor do motywu */
-    font-size: 40px;
-    margin-right: 10px; /* Odstęp między etykietą a wartością */
-}
-
-.summary-value {
-    background-color: #D9D9D9;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 25px;
-    padding: 5px;
-    text-align: center;
-    width: 289px;
-    height: 43px;
-    border-radius: 20px;
-    font-family: 'Anton SC', sans-serif;
-}
-
-#summary-wydatki{
-    color:#C50303
-}
-#summary-przychody{
-    color:#056911
-}
-#summary-budzet{
-    color:black
-}
-.wydatki .summary-label{
-	color: #C50303;
-}
-.przychody .summary-label{
-	color: #056911;
-}
-.budzet .summary-label{
-	color: #000;
-}
-
-
-.form-header{
-	display: flex;
-	gap: 15px;
-	margin-bottom: 25px;
-}
-
-.transaction-type-btn {
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    background-color: #909090;
-    color: white;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-}
-
-.transaction-type-btn.active {
-    background-color: green;
-}
-
-
-
-
-.form-content{
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-}
-
-
-.form-row {
-    display: flex;
-    justify-content: space-between; /* Rozkłada elementy: przyciski po lewej, input po prawej */
-    align-items: center; /* Wyrównanie do środka */
-    width: 100%;
-    max-width: 600px; /* Możesz dostosować szerokość */
-    margin: 10px auto; /* Wyśrodkowanie kontenera */
-}
-
-.form-header {
-    display: flex;
-    gap: 10px; /* Odstęp między przyciskami */
-}
-
-.form-group{
-	display: flex;
+    justify-content: space-between;
     align-items: center;
-	gap: 8px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+    position: relative;
+    transition: background-color 0.3s ease;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
 }
 
-.form-group label{
-	font-size: 18px;
-	color: #333;
-    white-space: nowrap; /* Zapobiega zawijaniu się tekstu */
+.transaction:hover { background-color: #f9f9f9; }
+.transaction-amount.negative { color: #C50303; }
+.transaction-amount.positive { color: #056911; }
+
+.transaction-date {
+    font-size: 14px;
+    color: gray;
 }
 
-.form-group select,
-.form-group input,
-	form-group textarea{
-	padding: 12px;
-	border: 2px solid #ddd;
-	border-radius: 8px;
-	font-size: 16px;
-	background: #f8f8f8;
-}
-
-.form-group textarea, .form-group select{
+.transaction-details {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
     width: 100%;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+	font-weight: normal;
 }
 
-.add-button{
-	background: #056911;
-	color: white;
-	padding: 15px;
-	border: none;
-	border-radius: 8px;
-	font-size: 18px;
-	cursor: pointer;
-	transition: background 0.3s;
-    font-family: 'Anton SC', sans-serif;
+.transaction-details.visible { display: block; }
+
+.transaction-description {
+    margin-bottom: 10px;
+    font-size: 14px;
 }
 
-.add-button:hover{
-	background: #03450c;
+.delete-button {
+    background-color: #C50303;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
 }
+
+.delete-button:hover { background-color: darkred;}
 
 /* Responsywność */
 @media (max-width: 1200px){
-	.dashboard-container{
-		grid-template-columns: 1fr;
-	}
-	
-	.summary-container{
-		flex-direction: row;
-		flex-wrap: wrap;
-	}
-	
-	.summary-item{
-		flex: 1;
-		min-width: 250px;
-	}
+	.dashboard-container{ grid-template-columns: 1fr; }
+	.summary-container{ flex-direction: row; flex-wrap: wrap; }
+	.summary-item{ flex: 1; min-width: 250px; }
+}
+
+@media (max-width: 600px){
+	.form-row{ flex-direction: column; gap: 10px; }
+	.summary-item{ flex-direction: column; }
+	.summary-value{ width: 100%; }
+	.form-group{ flex-direction: column; }
+	.form-content{ gap: 5px; }
+	.add-button{ padding: 10px; }
+    .transaction-list{ padding: 3px;}
+    .transaction-date {
+        display: flex;
+        flex-direction: column; /* Zawsze w dwóch liniach */
+        text-align: right; /* Wyrównanie do prawej */
+    }
+    .transaction{ padding: 3px;}
+    .incomes-container, .expenses-container{ padding: 3px; }
+    .transaction-list{ padding: 3px;}
 }
