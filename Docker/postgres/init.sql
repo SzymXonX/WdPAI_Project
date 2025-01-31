@@ -157,3 +157,38 @@ BEGIN
     RETURN COALESCE(user_role, 'brak użytkownika'); 
 END;
 $$ LANGUAGE plpgsql;
+
+
+/* Widoki */
+CREATE VIEW user_financial_summary AS
+SELECT 
+    u.id AS user_id,
+    u.first_name || ' ' || u.last_name AS full_name,
+    u.email,
+    COALESCE(SUM(s.total_expense), 0) AS total_expenses,
+    COALESCE(SUM(s.total_income), 0) AS total_income
+FROM users u
+LEFT JOIN summary s ON u.id = s.user_id
+GROUP BY u.id, u.first_name, u.last_name, u.email;
+
+
+CREATE VIEW category_financial_summary AS
+SELECT 
+    c.id AS category_id,
+    c.name AS category_name,
+    'expense' AS transaction_type,
+    COALESCE(SUM(e.amount), 0) AS total_amount
+FROM categories c
+LEFT JOIN expenses e ON c.id = e.category_id
+GROUP BY c.id, c.name
+
+UNION ALL
+
+SELECT 
+    ic.id AS category_id,
+    ic.name AS category_name,
+    'income' AS transaction_type,
+    COALESCE(SUM(i.amount), 0) AS total_amount
+FROM income_categories ic
+LEFT JOIN incomes i ON ic.id = i.category_id
+GROUP BY ic.id, ic.name;
