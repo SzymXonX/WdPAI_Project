@@ -3,19 +3,30 @@ SaveSpace to aplikacja do zarządzania wydatkami i przychodami, umożliwiająca 
 
 # Pobranie aplikacji:
 ```
-$ git clone https://github.com/SzymXonX/WdPAI_Project.git
+git clone https://github.com/SzymXonX/WdPAI_Project.git
 ```
 
 # Uruchamianie:
+## PC
 1. Otwórz pobrane repozytorium w np. Visual Studio Code
 2. Uruchom aplikacje Docker
 3. Zbuduj docker-compose
 ```
-$ docker-compose up --build
+docker-compose up --build
 ```
 4. Po załadowaniu wszystkich kontenerów i serwisów udaj się w przeglądarce na adres http://localhost:8080/
 5. Zaloguj się na utworzonych już użytkowników lub utwórz własne konto za pomocą "Nie masz konta?"
 6. Korzystaj z aplikacji! 
+
+## Smartphone
+1. Kroki 1-3 jak w przypadku PC
+2. Otwieramy konsole CMD i wpisujemy
+```
+ipconfig /all
+```
+3. Znajdujemy swoje IPv4
+4. Wchodzimy w przeglądarkę na smartphonie i wpisujemy [adres IPv4]:8080 np. 10.0.0.2:8080
+5. Korzystaj z aplikacji!
 
 # Dostępni użytkownicy
 ## Admin:
@@ -153,6 +164,20 @@ Connection/Password - password
 ![Podsumowanie](ScreenShots/summary.png)
 ![Ustawienia](ScreenShots/settings.png)
 
+
+# Baza danych
+Dodatkowe funkcje bazy danych:
+Funkcje:
+- getRole(user_id): Do funkcji przekazujemy user_id, zwraca role użytkownika
+
+Triggery:
+- update_summary_expense(): Po dodaniu rekordu do tabeli Expenses aktualizuje tabele Summary pole total_expense dodając wydatek do reszty
+- update_summary_expense_delete(): Po usunięciu rekordu z tabeli Expenses aktualizuje Summary pole total_expense usuwając wydatek z reszty
+- update_summary_income(): Po dodaniu rekordu do tabeli Incomes aktualizuje tabele Summary pole total_income  dodając przychód do reszty
+- update_summary_income_delete(): Po usunięciu rekordu z tabeli Incomes aktualizuje Summary pole total_income usuwając przychód z reszty
+
+## ERD Diagram
+![ERD](ScreenShots/ERD_Diagram.png)
 
 # Autor
 - Szymon Koczur
