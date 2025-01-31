@@ -64,6 +64,7 @@ Przy dacie za pomocą strzałek również można zmieniać datę podsumowania
 - CSS
 - JavaScript
 - PostgreSQL
+- PDO
 - nginx
 - pgAdmin
 
@@ -76,6 +77,67 @@ Connections/Hostname - postgres,
 Connection/Username - user,
 Connection/Password - password
 4. Gotowe, rozwiń zakładkę Servers/Database/Savespace
+
+# Struktura katalogów
+```
+/Docker
+    /nginx
+        - Dockerfile
+        - nginx.conf
+    /php
+        - Dockerfile
+    /postgres
+        - init.sql
+
+/Public
+    /css
+        - categoriesStyles.css
+        - mainStyles.css
+        - settingsStyles.css
+        - styles.css
+        - summaryStyles.css
+    /Images
+        - closed_eye_password.png
+        - logo_bez_tla.png
+        - logo.png
+        - open_eye_password.png
+    /js
+        - categoriesScript.js
+        - menuScript.js
+        - script.js
+        - summaryScript.js
+    /views
+        - categories.php
+        - login.php
+        - main.php
+        - register.php
+        - settings.php
+        - summary.php
+
+/Src
+    /controllers
+        - AppController.php
+        - CategoriesController.php
+        - DefaultController.php
+        - MainController.php
+        - SecurityController.php
+        - SettingsController.php
+        - SummaryController.php
+    /models
+        - Category.php
+        - Expense.php
+        - Income.php
+        - User.php
+
+- .gitignore
+- data.sql
+- Database.php
+- docker-compose.yml
+- index.php
+- initialize_db.php
+- README.MD
+- Routing.php
+```
 
 # Autor
 - Szymon Koczur
