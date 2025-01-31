@@ -35,45 +35,49 @@ class CategoriesController extends AppController {
 
     public function addCategory() {
         $this->requireLogin();
-
+    
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
             header("Location: /categories");
             exit();
         }
-
+    
         $categoryType = $_POST['category-type'] ?? 'expense';
         $categoryName = trim($_POST['category-name'] ?? '');
-
+    
         if (empty($categoryName)) {
             $_SESSION['messages'][] = "Nazwa kategorii nie może być pusta!";
+            $_SESSION['success'] = false;
             header("Location: /categories");
             exit();
         }
-
+    
         $database = new Database();
         $db = $database->connect();
-
+    
         $table = ($categoryType === 'income') ? 'income_categories' : 'categories';
         $checkStmt = $db->prepare("SELECT id FROM $table WHERE name = :name");
         $checkStmt->bindParam(':name', $categoryName);
         $checkStmt->execute();
-
+    
         if ($checkStmt->rowCount() > 0) {
             $_SESSION['messages'][] = "Taka kategoria już istnieje!";
+            $_SESSION['success'] = false;
             header("Location: /categories");
             exit();
         }
-
+    
         try {
             $stmt = $db->prepare("INSERT INTO $table (name) VALUES (:name)");
             $stmt->bindParam(':name', $categoryName);
             $stmt->execute();
-
+    
             $_SESSION['messages'][] = "Kategoria '{$categoryName}' została dodana!";
+            $_SESSION['success'] = true;
         } catch (Exception $e) {
             $_SESSION['messages'][] = "Błąd: " . $e->getMessage();
+            $_SESSION['success'] = false;
         }
-
+    
         header("Location: /categories");
         exit();
     }
@@ -92,7 +96,7 @@ class CategoriesController extends AppController {
     
         $database = new Database();
         $db = $database->connect();
-        
+    
         $table = ($categoryType === 'income') ? 'income_categories' : 'categories';
     
         $stmt = $db->prepare("SELECT id FROM $table WHERE id = :id");
@@ -106,14 +110,19 @@ class CategoriesController extends AppController {
     
         $stmt = $db->prepare("DELETE FROM $table WHERE id = :id");
         $stmt->bindParam(':id', $categoryId);
-        
+    
         if ($stmt->execute()) {
+            $_SESSION['messages'][] = "Kategoria została usunięta!";
+            $_SESSION['success'] = true;
             echo json_encode(["success" => true]);
         } else {
+            $_SESSION['messages'][] = "Błąd podczas usuwania kategorii.";
+            $_SESSION['success'] = false;
             echo json_encode(["success" => false, "message" => "Błąd podczas usuwania kategorii."]);
         }
     
         exit();
     }
+    
     
 }

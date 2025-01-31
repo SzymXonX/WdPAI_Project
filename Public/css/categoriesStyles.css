@@ -77,6 +77,32 @@ body{
     }
 }
 
+
+.error-messages,
+.success-messages {
+    background-color: #ffdddd;
+    color: #C50303;
+    padding: 10px;
+    border-radius: 5px;
+    width: 50%;
+    margin: 10px auto;
+    border: 1px solid #C50303;
+    text-align: center;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.success-messages {
+    background-color: #ddffdd;
+    color: #008000;
+    border: 1px solid #008000;
+}
+
+.error-messages p,
+.success-messages p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
 .sidebar-menu {
     position: fixed;
     top: 0;

@@ -62,6 +62,15 @@ $isAdmin = ($role === 'admin');
     </div>
 
     <main class="content">
+        <?php if (isset($_SESSION['messages']) && !empty($_SESSION['messages'])): ?>
+            <div class="<?= isset($_SESSION['success']) && $_SESSION['success'] ? 'success-messages' : 'error-messages' ?>">
+                <?php foreach ($_SESSION['messages'] as $message): ?>
+                    <p><?= htmlspecialchars($message); ?></p>
+                <?php endforeach; ?>
+            </div>
+            <?php unset($_SESSION['messages'], $_SESSION['success']); ?>
+        <?php endif; ?>
+
         <div class="category-form-container">
             <form class="form-container" method="POST" action="/addCategory">
                 <div class="form-header">
