@@ -113,6 +113,13 @@ Connection/Password - password
         - register.php
         - settings.php
         - summary.php
+/ScreenShots
+    - category.png
+    - login.png
+    - mainPage.png
+    - register.png
+    - settings.png
+    - summary.png
 
 /Src
     /controllers
@@ -138,6 +145,14 @@ Connection/Password - password
 - README.MD
 - Routing.php
 ```
+# Zrzuty ekranu strony
+![Logowanie](ScreenShots/login.png)
+![Rejestracja](ScreenShots/register.png)
+![Strona główna](ScreenShots/mainPage.png)
+![Kategorie](ScreenShots/category.png)
+![Podsumowanie](ScreenShots/summary.png)
+![Ustawienia](Settings/category.png)
+
 
 # Autor
 - Szymon Koczur
