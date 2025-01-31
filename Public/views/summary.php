@@ -6,6 +6,15 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: $url");
     exit;
 }
+$database = new Database();
+$db = $database->connect();
+
+$stmt = $db->prepare("SELECT getRole(:user_id)");
+$stmt->bindParam(':user_id', $_SESSION['user_id']);
+$stmt->execute();
+$role = $stmt->fetchColumn();
+
+$isAdmin = ($role === 'admin');
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +40,9 @@ if (!isset($_SESSION['user_id'])) {
             <li><a href="categories">kategorie</a></li>
             <li><a href="summary" class="active">podsumowanie</a></li>
             <li><a href="settings">ustawienia</a></li>
+            <?php if ($isAdmin): ?> 
+                <li><a href="admin">admin</a></li>
+            <?php endif; ?>
         </ul>
         <div class="menu-icon" id="menu-toggle">
             <svg width="40" height="35" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -45,6 +57,9 @@ if (!isset($_SESSION['user_id'])) {
             <li><a href="categories">kategorie</a></li>
             <li><a href="summary" class="active">podsumowanie</a></li>
             <li><a href="settings">ustawienia</a></li>
+            <?php if ($isAdmin): ?> 
+                <li><a href="admin">admin</a></li>
+            <?php endif; ?>
         </ul>
     </div>
 
