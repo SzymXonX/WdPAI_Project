@@ -183,6 +183,7 @@ Connection/Password - password
 
 
 # Baza danych
+Kompletna baza danych znajduje się w pliku Docker/postgres/init.sql
 Dodatkowe funkcje bazy danych:
 Funkcje:
 - getRole(user_id): Do funkcji przekazujemy user_id, zwraca role użytkownika
