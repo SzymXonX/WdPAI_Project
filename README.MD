@@ -100,6 +100,18 @@ Connection/Password - password
     /postgres
         - init.sql
 
+/Figma
+    - PC-Kategorie.png
+    - PC-Logowanie.png
+    - PC-Rejestracja.png
+    - PC-Strona główna.png
+    - PC-Ustawienia.png
+    - Phone-kategorie.png
+    - Phone-Logowanie.png
+    - Phone-Rejestracja.png
+    - Phone-Strona główna.png
+    - Phone-Ustawienia.png
+
 /Public
     /css
         - adminStyles.css
