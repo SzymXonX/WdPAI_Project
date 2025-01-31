@@ -1,3 +1,6 @@
+# SaveSpace
+SaveSpace to aplikacja do zarządzania wydatkami i przychodami, umożliwiająca użytkownikom śledzenie ich finansów, kategoryzację transakcji oraz analizę budżetu.
+
 # Pobranie aplikacji:
 ```
 $ git clone https://github.com/SzymXonX/WdPAI_Project.git
@@ -55,8 +58,16 @@ Tutaj wyświetla się podsumowanie kategorii i sumaryczny wydatek w danym miesi�
 
 Przy dacie za pomocą strzałek również można zmieniać datę podsumowania
 
+# Technologie
+- HTML
+- PHP
+- CSS
+- JavaScript
+- PostgreSQL
+- nginx
+- pgAdmin
 
-# pgAdmin
+# Logowanie do pgAdmin'a
 1. Aby dostać się do pgAdmina wpisz w przeglądarke localhost:5050/
 2. Zaloguj sie: Login - support@savespace.com    Hasło - password
 3. Utwórz nowy serwer: 
@@ -65,3 +76,6 @@ Connections/Hostname - postgres,
 Connection/Username - user,
 Connection/Password - password
 4. Gotowe, rozwiń zakładkę Servers/Database/Savespace
+
+# Autor
+- Szymon Koczur
